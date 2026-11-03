@@ -159,3 +159,8 @@ footer .g>div{justify-self:center}
 footer b{font-family:var(--pf);font-style:italic;font-weight:600;font-size:18px;color:var(--ink)}
 footer a,footer span{font-family:var(--bt);font-weight:300;font-size:18px;line-height:1.72;color:#3c3c3c}
 @media (max-width:767px){footer .g>div{justify-self:start}}
+
+/* =========================================================
+   LA CARTA · en celular la grilla no debe estirarse más que la hoja
+   ========================================================= */
+@media (max-width:900px){.carta{grid-template-columns:minmax(0,1fr)!important}.carta .item{grid-template-columns:minmax(0,1fr) auto}}
