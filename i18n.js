@@ -52,12 +52,14 @@ function apply(lang){
  nodes.forEach(({n,es})=>{const k=es.trim();const lead=es.match(/^\s*/)[0],trail=es.match(/\s*$/)[0];if(lang==='en'&&T[k]!==undefined)n.nodeValue=lead+T[k]+trail;else if(lang==='es')n.nodeValue=es});
  attrs.forEach(({el,a,es})=>el.setAttribute(a,lang==='en'?T[es.trim()]:es));
  dcs.forEach(({d,t,es,key})=>{if(lang==='en'){d.textContent=DC[key][0];t.nodeValue=DC[key][1]}else{d.textContent=es[0];t.nodeValue=es[1]}});
+ document.querySelectorAll('[data-en]').forEach(el=>{if(!el.dataset.es)el.dataset.es=el.tagName==='META'?el.content:el.textContent;const v=lang==='en'?el.dataset.en:el.dataset.es;if(el.tagName==='META')el.content=v;else el.textContent=v});
  document.documentElement.lang=lang;document.querySelectorAll('.lang button').forEach(b=>b.classList.toggle('on',b.dataset.l===lang));
  try{localStorage.setItem('cc-lang',lang)}catch(e){}
 }
 const sw=document.createElement('div');sw.className='lang';sw.innerHTML='<button type="button" data-l="es">ES</button><span>/</span><button type="button" data-l="en">EN</button>';
 const hd=document.querySelector('header.top');hd&&hd.appendChild(sw);
-sw.addEventListener('click',e=>{const b=e.target.closest('button');if(b)apply(b.dataset.l)});
+sw.addEventListener('click',e=>{const b=e.target.closest('button');if(!b)return;try{localStorage.setItem('cc-lang',b.dataset.l)}catch(x){}const u=new URL(location.href);if(b.dataset.l==='en')u.searchParams.set('lang','en');else u.searchParams.delete('lang');location.href=u.href});
 let lang='es';try{lang=localStorage.getItem('cc-lang')||'es'}catch(e){}
+const ql=new URLSearchParams(location.search).get('lang');if(ql==='en'||ql==='es')lang=ql;
 apply(lang);
 })();

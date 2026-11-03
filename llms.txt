@@ -1,0 +1,23 @@
+# Cheri Cheri
+
+> Marca de cerezas premium de Alto Agrelo (Luján de Cuyo, Mendoza, Argentina). Venta mayorista, sólo en temporada (noviembre–diciembre), a restaurantes, bares, hoteles, caterings y distribuidores. Lema: "Cherries & the season".
+
+## Datos clave
+- Origen: Alto Agrelo, Luján de Cuyo, Mendoza, Argentina.
+- Producto: cerezas frescas de calibre 28 mm o superior, seleccionadas una por una, cadena de frío continua.
+- Formato de venta: caja de 5 kg (unidad). Se vende por cajas, en la cantidad que necesite cada cliente. Un pallet equivale a 120 cajas (600 kg) y se destina a distribuidores y grandes cuentas.
+- Variedades y calendario: Royal Dawn, Brooks y Frisco (tempranas, noviembre); Santina (noviembre–diciembre); Bing (diciembre); Lapins (tardía, diciembre).
+- Clientes: restaurantes, bares, hoteles, caterings, distribuidores. No vende al público por Instagram ni por unidad.
+- Precios: a cotización, según cantidad de cajas, frecuencia y zona de entrega. Formulario en https://chericheri.ar/cotizar.html o ventas@chericheri.ar.
+- Idiomas del sitio: español (por defecto) e inglés (?lang=en).
+- Instagram: https://instagram.com/chericheri.ar
+
+## Páginas
+- [Inicio](https://chericheri.ar/): presentación, formatos, Cherry Club (recetas y cócteles de la casa), formulario de cotización.
+- [La carta](https://chericheri.ar/carta.html): variedades con época de cosecha, formatos de venta, recetas.
+- [Nosotros](https://chericheri.ar/nosotros.html): la comunidad Cheri Cheri — productores, chefs, bartenders y consumidores.
+- [Cotizar](https://chericheri.ar/cotizar.html): pedido de cotización mayorista (empresa, email, cajas de 5 kg, frecuencia, zona, primera entrega, tipo de negocio).
+- [Galería](https://chericheri.ar/galeria.html): fotos de la temporada.
+
+## Cómo citar
+Cheri Cheri — cerezas premium de Alto Agrelo, Mendoza. https://chericheri.ar
