@@ -23,7 +23,7 @@
 <!-- seo:end -->
 
 <link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,700;0,900;1,400;1,700&family=Bitter:ital,wght@0,300;0,400;0,500;1,400&family=PT+Sans:ital,wght@0,400;0,700;1,400;1,700&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400..900;1,400..900&family=Bitter:ital,wght@0,300..700;1,300..700&family=PT+Sans:ital,wght@0,400;0,700;1,400;1,700&display=swap" rel="stylesheet">
 <style>
 :root{--red:#DA4143;--paper:#F9F8F2;--paper2:#F7F4EC;--ink:#333;--dark:#1a1a1a;--rule:rgba(218,65,67,.4);--grey:#636363;
  --pf:'Playfair Display',Georgia,serif;--bt:'Bitter',Georgia,serif;--pt:'PT Sans',Arial,sans-serif}
@@ -207,6 +207,9 @@ body.menu nav.main .btn{opacity:1}
 body.menu #veil{opacity:1;pointer-events:auto}
 @media (max-width:760px){nav.main{left:12px;top:12px;width:calc(100vw - 24px);height:calc(100vh - 24px);padding:30px 26px}body.menu .page{transform:translateX(30vw) scale(1.08)}}
 @media (prefers-reduced-motion:reduce){.page,nav.main,nav.main a{transition:none!important}} .top{position:relative} .lang{position:absolute;right:0;top:calc(100% + 10px);z-index:20;display:flex;gap:6px;align-items:center;font-family:var(--pt);font-style:italic;font-weight:700;font-size:12px;letter-spacing:.1em;color:var(--grey)} .lang button{color:var(--grey);padding:4px 2px;min-height:0} .lang button.on{color:var(--red);text-decoration:underline;text-underline-offset:4px} @media (max-width:760px){.lang{top:calc(100% + 6px)}}  /* headings — Da Maria spec */ h1,h2{letter-spacing:-.012em;line-height:1!important} .redbox{padding:24px 16px!important} .redbox .lbl{font-family:var(--bt)!important;font-style:normal!important;font-weight:400!important;text-transform:none!important;letter-spacing:0!important;font-size:18px!important;color:#fff;display:block!important;margin-bottom:6px} .redbox .lbl::after{display:none!important} .redbox h2{font-size:clamp(44px,9.2vw,208px)!important;line-height:1!important;letter-spacing:-.01em!important;margin:0!important;overflow-wrap:normal} .side .redbox h2,.reserve .redbox h2,.order .right .redbox h2{font-size:clamp(40px,5.2vw,112px)!important} .who .text .redbox h2,.philo .redbox h2{font-size:clamp(48px,7.6vw,160px)!important} .eyebrow{font-family:var(--bt)!important;font-style:normal!important;font-weight:400!important;text-transform:none!important;letter-spacing:0!important;font-size:18px!important;color:var(--red)} .ph1 h1{letter-spacing:-.013em} /* per-letter reveal */ .rvl .w{display:inline-block;white-space:nowrap} .rvl .l{display:inline-block;opacity:0;transform:translateX(12px);transition:opacity .45s ease,transform .45s ease} .rvl.on .l{opacity:1;transform:none} @media (prefers-reduced-motion:reduce){.rvl .l{opacity:1;transform:none;transition:none}}   .top{position:relative} .lang{position:absolute;right:0;top:calc(100% + 10px);z-index:20;display:flex;gap:6px;align-items:center;font-family:var(--pt);font-style:italic;font-weight:700;font-size:12px;letter-spacing:.1em;color:var(--grey)} .lang button{color:var(--grey);padding:4px 2px;min-height:0} .lang button.on{color:var(--red);text-decoration:underline;text-underline-offset:4px} @media (max-width:760px){.lang{top:calc(100% + 6px)}} /* seo-fix */ header.top{z-index:30}</style>
+<link href="https://api.fontshare.com/v2/css?f[]=zodiak@700&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="dm.css">
+<script src="dm.js" defer></script>
 </head>
 <body>
 
@@ -243,17 +246,16 @@ body.menu #veil{opacity:1;pointer-events:auto}
     <h2 class="menu-h">Variedades</h2>
     <img loading="lazy" decoding="async" class="ill" src="img/ill-bowl.png" alt="">
     <p><span class="dc">S</span>eis variedades de alta demanda internacional, en cajas de 5 kg, cada una con su momento dentro de la temporada. Royal Dawn, Brooks y Frisco abren noviembre; Santina, la protagonista, llena el medio de la cosecha; Bing y Lapins la cierran con fruta grande, oscura y firme. Todas pasan por una mano antes de entrar en la caja, y ninguna sale del frío hasta tu puerta.</p>
-    <div class="btns"><a class="btn" href="carta.html">Ver la carta</a><a class="btn" href="cotizar.html#form">Cotizar</a></div>
+    <div class="btns"><a class="btn" href="carta.html">Ver la carta</a></div>
   </div>
   <div class="reserve rv">
     <div class="redbox"><span class="lbl">Pedidos</span><h2>Cotizar</h2></div>
     <img loading="lazy" decoding="async" class="ill" src="img/ill-tel.png" alt="">
+    <a class="contact" href="mailto:ventas@chericheri.ar">ventas@chericheri.ar</a>
     <div class="info">
-      <div><b>Ventas mayoristas</b><a href="mailto:ventas@chericheri.ar">ventas@chericheri.ar</a></div>
       <div><b>Temporada</b><span>Noviembre a mediados de diciembre</span><br><span>Entregas semanales</span></div>
       <div><b>Formatos</b><span>Caja de 5 kg</span><br><span>Pallet de 120 cajas · 600 kg</span></div>
       <div><b>Origen</b><span>Alto Agrelo</span><br><span>Luján de Cuyo, Mendoza</span><br><span>Argentina</span></div>
-      <div><b>Instagram</b><a href="https://instagram.com/chericheri.ar" target="_blank" rel="noopener">@chericheri.ar</a></div>
     </div>
   </div>
 </section>
@@ -271,10 +273,11 @@ body.menu #veil{opacity:1;pointer-events:auto}
 <!-- EN LA CARTA + ESTA SEMANA -->
 <section class="spec" id="carta">
   <div class="left rv">
-    <h2><span>Cherry<br>Club</span><img loading="lazy" decoding="async" class="ill" src="img/ill-copa.png" alt=""></h2>
+    <h2>Cherry<br>Club</h2>
     <div class="grid">
       <figure class="zoomf"><img loading="lazy" decoding="async" src="img/trago.jpg" alt="Mano sosteniendo un vaso con cóctel de cereza al sol"></figure>
       <div class="card"><div>
+        <img loading="lazy" decoding="async" class="ill" src="img/ill-copa.png" alt="">
         <div><b>Cóctel de la casa</b>Tres cerezas machacadas, gin, jugo de limón, hielo. Una cereza entera en el borde.</div>
         <div><b>Dónde</b>En la barra de los restaurantes y bares que sirven Cheri Cheri esta temporada.</div>
       </div></div>
