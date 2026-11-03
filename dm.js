@@ -10,7 +10,7 @@
   }
 
   // 2) Ajuste de títulos
-  var els=[].slice.call(document.querySelectorAll('.sheet h2, .sheet h3')).filter(function(h){return !h.closest('.ticker, .gal')});
+  var els=[].slice.call(document.querySelectorAll('.sheet h1, .sheet h2, .sheet h3')).filter(function(h){return !h.closest('.ticker, .gal')});
   function overflows(h){
     var cs=getComputedStyle(h), cw=h.clientWidth-parseFloat(cs.paddingLeft)-parseFloat(cs.paddingRight);
     var ws=h.querySelectorAll('.w');
