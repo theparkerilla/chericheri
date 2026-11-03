@@ -8,7 +8,7 @@
 - Formato de venta: caja de 5 kg (unidad). Se vende por cajas, en la cantidad que necesite cada cliente. Un pallet equivale a 120 cajas (600 kg) y se destina a distribuidores y grandes cuentas.
 - Variedades y calendario: Royal Dawn, Brooks y Frisco (tempranas, noviembre); Santina (noviembre–diciembre); Bing (diciembre); Lapins (tardía, diciembre).
 - Clientes: restaurantes, bares, hoteles, caterings, distribuidores. No vende al público por Instagram ni por unidad.
-- Precios: a cotización, según cantidad de cajas, frecuencia y zona de entrega. Formulario en https://chericheri.ar/cotizar.html o ventas@chericheri.ar.
+- Precios: a cotización, según cantidad de cajas, frecuencia y zona de entrega. Formulario en https://chericheri.ar/cotizar.html o chericheriar@gmail.com.
 - Idiomas del sitio: español (por defecto) e inglés (?lang=en).
 - Instagram: https://instagram.com/chericheri.ar
 
