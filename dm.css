@@ -112,7 +112,7 @@ nav.main a:not(.btn){font-family:var(--zk);font-weight:700;font-size:42px;line-h
 .reserve .info{font-size:20px;line-height:1.6;gap:24px}
 .reserve .info b{font-family:var(--bt);font-weight:600;text-transform:none;letter-spacing:0;color:#313131;margin-bottom:0}
 .reserve .info a{color:var(--ink);font-size:20px}
-@media (max-width:767px){.reserve .contact{font-size:8vw}.reserve .info{font-size:18px}}
+@media (max-width:767px){.reserve .contact{font-size:6.4vw}.reserve .info{font-size:18px}}
 
 /* cherry club: la copa grande entra en el recuadro y el texto queda abajo */
 .spec .left h2{display:block}
