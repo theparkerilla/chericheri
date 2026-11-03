@@ -345,7 +345,7 @@ body.menu #veil{opacity:1;pointer-events:auto}
 </div></div>
 
 <script>
-const MAIL='chericheriar@gmail.com', ENDPOINT='/api/cotizar';
+const MAIL='chericheriar@gmail.com', ENDPOINT='https://api.web3forms.com/submit', W3F_KEY='';
 const $=(s,c=document)=>c.querySelector(s), $$=(s,c=document)=>[...c.querySelectorAll(s)];
 const io=new IntersectionObserver(es=>es.forEach(e=>{if(e.isIntersecting){e.target.classList.add('in');io.unobserve(e.target)}}),{threshold:.1});
 $$('.rv').forEach(el=>io.observe(el));
@@ -354,7 +354,7 @@ $$('[data-closemenu], nav.main a, nav.main button').forEach(a=>a.addEventListene
 $$('[data-open]').forEach(b=>b.addEventListener('click',()=>{document.body.classList.remove('menu');setTimeout(()=>$('#cotizar').scrollIntoView({behavior:'smooth'}),document.body.classList.contains('menu')?900:0);setTimeout(()=>$('input[name=empresa]').focus(),1600)}));
 
 const _f=$('#f');_f&&_f.addEventListener('submit',async e=>{e.preventDefault();const f=e.target;if(!f.reportValidity())return;const d=Object.fromEntries(new FormData(f).entries());d.temporada='2026/27';const lines=Object.entries(d).map(([k,v])=>`${k}: ${v}`).join('\n');const mailto=`mailto:${MAIL}?subject=${encodeURIComponent('Cotización Cheri Cheri · '+d.cajas+' cajas · '+d.empresa)}&body=${encodeURIComponent(lines)}`;
- let ok=false;if(ENDPOINT){const btn=f.querySelector('[type=submit]');btn&&(btn.disabled=true);try{const L={empresa:'Empresa',email:'Email',cajas:'Cajas de 5 kg',frecuencia:'Frecuencia',zona:'Zona de entrega',fecha:'Primera entrega',tipo:'Tipo de negocio',mensaje:'Mensaje',temporada:'Temporada'};const body={};Object.entries(d).forEach(([k,v])=>{body[L[k]||k]=String(v||'').trim()||'—'});body['Idioma']=document.documentElement.lang||'es';body['Página']=location.href;Object.assign(body,{_subject:'Cotización Cheri Cheri · '+d.cajas+' cajas · '+d.empresa,_template:'table',_captcha:'false',_replyto:d.email||''});const r=await fetch(ENDPOINT,{method:'POST',headers:{'Content-Type':'application/json','Accept':'application/json'},body:JSON.stringify(body)});const j=await r.json().catch(()=>({}));ok=r.ok&&(j.success===true||j.success==='true');if(!ok)console.warn('FormSubmit:',j.message||r.status)}catch(err){ok=false}btn&&(btn.disabled=false)}
+ let ok=false;if(ENDPOINT&&W3F_KEY){const btn=f.querySelector('[type=submit]');btn&&(btn.disabled=true);try{const L={empresa:'Empresa',email:'Email',cajas:'Cajas de 5 kg',frecuencia:'Frecuencia',zona:'Zona de entrega',fecha:'Primera entrega',tipo:'Tipo de negocio',mensaje:'Mensaje',temporada:'Temporada'};const body={};Object.entries(d).forEach(([k,v])=>{body[L[k]||k]=String(v||'').trim()||'—'});body['Idioma']=document.documentElement.lang||'es';body['Página']=location.href;Object.assign(body,{access_key:W3F_KEY,subject:'Cotización Cheri Cheri · '+d.cajas+' cajas · '+d.empresa,from_name:'Sitio Cheri Cheri',replyto:d.email||''});const r=await fetch(ENDPOINT,{method:'POST',headers:{'Content-Type':'application/json','Accept':'application/json'},body:JSON.stringify(body)});const j=await r.json().catch(()=>({}));ok=r.ok&&(j.success===true||j.success==='true');if(!ok)console.warn('FormSubmit:',j.message||r.status)}catch(err){ok=false}btn&&(btn.disabled=false)}
  if(!ok){$('#doneMail').textContent=`Si tu correo no se abrió solo, escribinos a ${MAIL}.`;location.href=mailto}
  f.style.display='none';$('#done').classList.add('show')});
 </script>
