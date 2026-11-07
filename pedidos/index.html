@@ -1,0 +1,559 @@
+<!doctype html>
+<html lang="es">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<meta name="theme-color" content="#DA4143">
+<meta name="robots" content="noindex,nofollow">
+<title>Pedidos · Cheri Cheri</title>
+<link rel="icon" href="/favicon.ico" sizes="32x32"><link rel="icon" href="/icon.svg" type="image/svg+xml"><link rel="apple-touch-icon" href="/apple-touch-icon.png">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400..900;1,400..900&family=Bitter:ital,wght@0,300..700;1,300..700&display=swap" rel="stylesheet">
+<style>
+/* =========================================================
+   Cheri Cheri · Levantador de pedidos para vendedores
+   Precios y comisiones: editar CONFIG en el <script> de abajo.
+   ========================================================= */
+:root{--red:#DA4143;--paper:#F9F8F2;--ink:#333;--grey:#636363;--rule:rgba(218,65,67,.35);--soft:rgba(218,65,67,.07);--green:#3E6B48;
+  --pf:'Playfair Display',Georgia,serif;--bt:'Bitter',Georgia,serif}
+*{box-sizing:border-box;margin:0;padding:0}
+html{-webkit-text-size-adjust:100%}
+body{background:var(--paper) url(/img/paper.png) 0 0/740px repeat;background-blend-mode:multiply;color:var(--ink);font-family:var(--bt);font-weight:300;font-size:17px;line-height:1.5;min-height:100vh;padding:env(safe-area-inset-top) 0 calc(120px + env(safe-area-inset-bottom))}
+button,input,select,textarea{font:inherit;color:inherit}
+button{cursor:pointer;background:none;border:0}
+.wrap{max-width:560px;margin:0 auto;padding:0 16px}
+
+/* Header */
+header{position:sticky;top:0;z-index:20;background:var(--paper);border-bottom:3px solid var(--red)}
+.hd{display:flex;align-items:center;gap:12px;padding:12px 16px;max-width:560px;margin:0 auto}
+.hd img{width:30px;height:auto}
+.brand{display:flex;flex-direction:column;line-height:1.05}
+.brand b{font-family:var(--pf);font-weight:700;font-size:22px;color:var(--red)}
+.brand small{font-family:var(--pf);font-style:italic;font-weight:600;font-size:14px;color:var(--grey)}
+.who{margin-left:auto;text-align:right;font-size:13px;line-height:1.3}
+.who b{display:block;font-weight:600;font-size:15px;max-width:42vw;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+.who button{font-family:var(--pf);font-style:italic;color:var(--red);font-size:13px;text-decoration:underline;text-underline-offset:2px}
+.tabs{display:flex;max-width:560px;margin:0 auto;padding:0 16px}
+.tabs button{flex:1;padding:10px 0 9px;font-family:var(--pf);font-style:italic;font-weight:600;font-size:17px;color:var(--grey);border-bottom:3px solid transparent;margin-bottom:-3px}
+.tabs button.on{color:var(--red);border-color:var(--red)}
+
+/* Bloques */
+.step{margin-top:22px}
+.lbl{display:flex;align-items:center;gap:10px;font-family:var(--pf);font-style:italic;font-weight:700;font-size:18px;color:var(--red);margin-bottom:10px}
+.lbl::after{content:"";flex:1;height:1px;background:var(--rule)}
+.lbl i{font-style:normal;font-family:var(--bt);font-weight:600;font-size:12px;width:22px;height:22px;border-radius:50%;background:var(--red);color:#fff;display:inline-flex;align-items:center;justify-content:center}
+.card{background:#fff;border:1px solid var(--rule);border-radius:6px;padding:16px}
+
+/* Tipo de pedido */
+.types{display:grid;grid-template-columns:1fr 1fr;gap:10px}
+.type{position:relative;text-align:left;display:flex;flex-direction:column;justify-content:flex-start;background:#fff;border:2px solid var(--rule);border-radius:8px;padding:14px 12px 12px;transition:border-color .15s,background .15s}
+.type b{display:block;font-family:var(--pf);font-weight:700;font-size:19px;line-height:1.15;margin-bottom:4px}
+.type span{display:block;font-size:13.5px;color:var(--grey);line-height:1.35}
+.type.on{border-color:var(--red);background:var(--soft)}
+.type.on::before{content:"✓";position:absolute;top:10px;right:10px;width:22px;height:22px;border-radius:50%;background:var(--red);color:#fff;font-size:13px;display:flex;align-items:center;justify-content:center;font-weight:700}
+.badge{display:inline-block!important;margin-top:8px;font-family:var(--bt);font-weight:600;font-size:11.5px!important;letter-spacing:.02em;color:#fff!important;background:var(--green);border-radius:3px;padding:3px 7px}
+
+/* Cantidad */
+.row{display:flex;align-items:center;justify-content:space-between;gap:12px}
+.row+.row{margin-top:14px;padding-top:14px;border-top:1px dashed var(--rule)}
+.row .t b{display:block;font-weight:600;font-size:16px}
+.row .t span{font-size:13.5px;color:var(--grey)}
+.stepper{display:flex;align-items:center;border:2px solid var(--red);border-radius:40px;overflow:hidden;flex-shrink:0}
+.stepper button{width:46px;height:46px;font-size:24px;font-weight:600;color:var(--red);line-height:1}
+.stepper button:active{background:var(--soft)}
+.stepper output{min-width:38px;text-align:center;font-family:var(--pf);font-weight:700;font-size:24px}
+.seg{display:flex;border:2px solid var(--red);border-radius:40px;overflow:hidden;flex-shrink:0}
+.seg button{padding:10px 14px;font-size:14.5px;font-weight:600;color:var(--red)}
+.seg button.on{background:var(--red);color:#fff}
+.sub{display:none}
+.sus .sub{display:flex}
+
+/* Campos */
+.f{display:block;margin-bottom:14px}
+.f:last-child{margin-bottom:0}
+.f>span{display:block;font-weight:600;font-size:14.5px;margin-bottom:5px}
+.f>span em{font-style:normal;font-weight:300;color:var(--grey)}
+.f input,.f textarea,.f select{width:100%;font-size:17px;padding:12px 12px;border:1px solid #cfcac0;border-radius:6px;background:#fff;outline:none;-webkit-appearance:none;appearance:none}
+.f input:focus,.f textarea:focus,.f select:focus{border-color:var(--red);box-shadow:0 0 0 3px var(--soft)}
+.f textarea{min-height:76px;resize:vertical}
+.f .hint{display:block;font-size:12.5px;color:var(--grey);margin-top:4px}
+.two{display:grid;grid-template-columns:1fr 1fr;gap:10px}
+.chips{display:flex;flex-wrap:wrap;gap:8px}
+.chips button{padding:9px 14px;border:1.5px solid var(--rule);border-radius:40px;font-size:15px;background:#fff}
+.chips button.on{border-color:var(--red);background:var(--red);color:#fff;font-weight:600}
+.err{border-color:var(--red)!important;background:#fff6f6!important}
+
+/* Barra inferior */
+.bar{position:fixed;left:0;right:0;bottom:0;z-index:30;background:var(--paper);border-top:3px solid var(--red);padding:10px 16px calc(10px + env(safe-area-inset-bottom))}
+.bar .in{max-width:560px;margin:0 auto;display:flex;align-items:center;gap:12px}
+.sum{flex:1;min-width:0;line-height:1.25}
+.sum .tot{font-family:var(--pf);font-weight:700;font-size:23px;color:var(--ink)}
+.sum .det{font-size:12.5px;color:var(--grey);white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.sum .com{font-size:13px;font-weight:600;color:var(--green)}
+.btn{display:inline-flex;align-items:center;justify-content:center;gap:8px;background:var(--red);color:#fff;font-family:var(--pf);font-style:italic;font-weight:700;font-size:19px;padding:13px 22px;border-radius:40px;text-decoration:none;white-space:nowrap}
+.btn:active{transform:scale(.98)}
+.btn[disabled]{opacity:.55}
+.btn.ghost{background:#fff;color:var(--red);border:2px solid var(--red)}
+.btn.wa{background:#25A35A}
+.btn.block{width:100%}
+
+/* Hojas (modal) */
+.sheet{position:fixed;inset:0;z-index:50;background:rgba(30,20,20,.45);display:none;align-items:flex-end;justify-content:center}
+.sheet.open{display:flex}
+.pane{background:var(--paper);width:100%;max-width:560px;max-height:92vh;overflow:auto;border-radius:16px 16px 0 0;border-top:4px solid var(--red);padding:20px 18px calc(20px + env(safe-area-inset-bottom));animation:up .22s ease-out}
+@keyframes up{from{transform:translateY(40px);opacity:.4}to{transform:none;opacity:1}}
+.pane h2{font-family:var(--pf);font-weight:700;font-size:28px;line-height:1.1;margin-bottom:6px}
+.pane h2 em{color:var(--red)}
+.pane p.lead{color:var(--grey);font-size:15px;margin-bottom:16px}
+.res{background:#fff;border:1px solid var(--rule);border-radius:6px;padding:4px 14px;margin-bottom:16px}
+.res div{display:flex;justify-content:space-between;gap:14px;padding:9px 0;border-bottom:1px dashed var(--rule);font-size:15px}
+.res div:last-child{border-bottom:0}
+.res div span{color:var(--grey)}
+.res div b{font-weight:600;text-align:right}
+.res .big b{font-family:var(--pf);font-size:20px}
+.res .g b{color:var(--green)}
+.acts{display:flex;flex-direction:column;gap:10px}
+.note{font-size:13px;color:var(--grey);margin-top:12px;text-align:center}
+.alert{background:#fff6f6;border:1px solid var(--red);border-radius:6px;padding:12px 14px;font-size:14.5px;margin-bottom:14px}
+.ok{width:62px;height:62px;border-radius:50%;background:var(--green);color:#fff;font-size:32px;display:flex;align-items:center;justify-content:center;margin-bottom:12px}
+
+/* Mis pedidos */
+.kpis{display:grid;grid-template-columns:1fr 1fr 1fr;gap:8px;margin-top:20px}
+.kpi{background:#fff;border:1px solid var(--rule);border-radius:6px;padding:12px 10px;text-align:center}
+.kpi b{display:block;font-family:var(--pf);font-weight:700;font-size:22px;line-height:1.1}
+.kpi span{font-size:12px;color:var(--grey)}
+.kpi.g b{color:var(--green)}
+.list{margin-top:16px;display:flex;flex-direction:column;gap:8px}
+.it{background:#fff;border:1px solid var(--rule);border-radius:6px;padding:12px 14px;display:grid;grid-template-columns:1fr auto;gap:2px 10px}
+.it b{font-weight:600}
+.it .r{text-align:right;font-family:var(--pf);font-weight:700}
+.it small{color:var(--grey);font-size:13px}
+.it .tag{font-size:11.5px;font-weight:600;color:#fff;background:var(--green);border-radius:3px;padding:1px 6px;margin-left:6px;vertical-align:2px}
+.empty{text-align:center;color:var(--grey);padding:40px 10px;font-size:15px}
+.foot{margin-top:28px;text-align:center;font-family:var(--pf);font-style:italic;color:var(--grey);font-size:14px}
+[hidden]{display:none!important}
+</style>
+</head>
+<body>
+
+<header>
+  <div class="hd">
+    <img src="/img/isotipo.svg" alt="">
+    <div class="brand"><b>Cheri Cheri</b><small>Pedidos · temporada <span class="temp"></span></small></div>
+    <div class="who"><span>Vendés como</span><b id="whoName">—</b><button id="whoEdit" type="button">cambiar</button></div>
+  </div>
+  <nav class="tabs">
+    <button type="button" class="on" data-tab="nuevo">Nuevo pedido</button>
+    <button type="button" data-tab="mios">Mis pedidos <span id="nMios"></span></button>
+  </nav>
+</header>
+
+<main class="wrap">
+
+<!-- ============ NUEVO PEDIDO ============ -->
+<form id="f" novalidate autocomplete="off">
+
+  <section class="step">
+    <div class="lbl"><i>1</i>¿Qué compra?</div>
+    <div class="types">
+      <button type="button" class="type on" data-tipo="unico">
+        <b>Una vez</b>
+        <span>Una entrega, cajas de 5 kg.</span>
+        <span class="p" data-p="unico"></span>
+      </button>
+      <button type="button" class="type" data-tipo="sus">
+        <b>Suscripción de temporada</b>
+        <span>Entregas fijas toda la temporada, mejor precio.</span>
+        <span class="badge" id="susBadge">Más comisión para vos</span>
+      </button>
+    </div>
+  </section>
+
+  <section class="step">
+    <div class="lbl"><i>2</i>¿Cuánto?</div>
+    <div class="card" id="qty">
+      <div class="row">
+        <div class="t"><b id="qLbl">Cajas de 5 kg</b><span id="qSub">por entrega</span></div>
+        <div class="stepper"><button type="button" data-d="cajas" data-v="-1" aria-label="Menos cajas">−</button><output id="cajas">1</output><button type="button" data-d="cajas" data-v="1" aria-label="Más cajas">+</button></div>
+      </div>
+      <div class="row sub">
+        <div class="t"><b>Frecuencia</b><span>cada cuánto recibe</span></div>
+        <div class="seg" id="frec"><button type="button" class="on" data-v="semanal">Semanal</button><button type="button" data-v="quincenal">Quincenal</button></div>
+      </div>
+      <div class="row sub">
+        <div class="t"><b>Entregas</b><span id="entSub">en la temporada</span></div>
+        <div class="stepper"><button type="button" data-d="entregas" data-v="-1" aria-label="Menos entregas">−</button><output id="entregas">4</output><button type="button" data-d="entregas" data-v="1" aria-label="Más entregas">+</button></div>
+      </div>
+    </div>
+  </section>
+
+  <section class="step">
+    <div class="lbl"><i>3</i>¿Para quién?</div>
+    <div class="card">
+      <label class="f"><span>Nombre y apellido</span><input name="cliente" required autocomplete="off" placeholder="Ej: Sofía Martínez"></label>
+      <label class="f"><span>WhatsApp del cliente</span><input name="tel" type="tel" inputmode="tel" required placeholder="11 2345 6789"><small class="hint">Código de área sin 0 y sin 15.</small></label>
+      <label class="f"><span>Zona o barrio</span><input name="zona" required placeholder="Ej: Palermo, Nordelta, Mendoza Capital"></label>
+      <label class="f"><span>Dirección de entrega <em>(opcional)</em></span><input name="direccion" placeholder="Calle, número, piso"></label>
+    </div>
+  </section>
+
+  <section class="step">
+    <div class="lbl"><i>4</i>Entrega y pago</div>
+    <div class="card">
+      <div class="two">
+        <label class="f"><span id="fechaLbl">Fecha preferida</span><input name="fecha" type="date"></label>
+        <label class="f"><span>Horario</span><select name="franja"><option>Cualquiera</option><option>Mañana</option><option>Tarde</option><option>Noche</option></select></label>
+      </div>
+      <div class="f"><span>Cómo paga</span>
+        <div class="chips" id="pago"><button type="button" class="on">Transferencia</button><button type="button">Efectivo</button><button type="button">Mercado Pago</button></div>
+      </div>
+      <label class="f"><span>Notas <em>(opcional)</em></span><textarea name="notas" placeholder="Es para regalo, timbre que no anda, etc."></textarea></label>
+    </div>
+  </section>
+
+  <p class="foot">Cherries &amp; the season</p>
+</form>
+
+<!-- ============ MIS PEDIDOS ============ -->
+<section id="mios" hidden>
+  <div class="kpis">
+    <div class="kpi"><b id="kPed">0</b><span>pedidos</span></div>
+    <div class="kpi"><b id="kCaj">0</b><span>cajas</span></div>
+    <div class="kpi g"><b id="kCom">—</b><span>tu comisión</span></div>
+  </div>
+  <div class="list" id="lista"></div>
+  <p class="note">Esta lista queda guardada sólo en este teléfono.</p>
+</section>
+
+</main>
+
+<!-- Barra inferior -->
+<div class="bar" id="bar">
+  <div class="in">
+    <div class="sum">
+      <div class="tot" id="tot">—</div>
+      <div class="det" id="det"></div>
+      <div class="com" id="com"></div>
+    </div>
+    <button type="button" class="btn" id="go">Revisar</button>
+  </div>
+</div>
+
+<!-- Hoja: vendedor -->
+<div class="sheet" id="shV" role="dialog" aria-modal="true" aria-labelledby="vT">
+  <form class="pane" id="fv" novalidate>
+    <h2 id="vT">Hola. <em>¿Quién vende?</em></h2>
+    <p class="lead">Lo pedimos una sola vez para saber de quién es cada pedido y pagarte la comisión.</p>
+    <label class="f"><span>Tu nombre</span><input name="vnombre" required autocomplete="name" placeholder="Nombre y apellido"></label>
+    <label class="f"><span>Tu celular</span><input name="vcel" type="tel" inputmode="tel" required autocomplete="tel" placeholder="11 2345 6789"></label>
+    <div class="acts" style="margin-top:6px"><button class="btn block" type="submit">Empezar</button></div>
+  </form>
+</div>
+
+<!-- Hoja: revisar y enviar -->
+<div class="sheet" id="shR" role="dialog" aria-modal="true" aria-labelledby="rT">
+  <div class="pane">
+    <div id="rView">
+      <h2 id="rT">Revisá <em>el pedido</em></h2>
+      <p class="lead">Si está todo bien, enviá. Llega directo a Cheri Cheri.</p>
+      <div id="rErr"></div>
+      <div class="res" id="rRes"></div>
+      <div class="acts">
+        <button type="button" class="btn block" id="send">Enviar pedido</button>
+        <button type="button" class="btn ghost block" data-close>Corregir</button>
+      </div>
+    </div>
+    <div id="dView" hidden>
+      <div class="ok">✓</div>
+      <h2>Pedido <em>enviado</em></h2>
+      <p class="lead" id="dLead"></p>
+      <div class="res" id="dRes"></div>
+      <div class="acts">
+        <a class="btn wa block" id="waCli" href="#" target="_blank" rel="noopener">Avisarle al cliente por WhatsApp</a>
+        <button type="button" class="btn ghost block" id="otro">Cargar otro pedido</button>
+      </div>
+      <p class="note">Desde Cheri Cheri le confirmamos al cliente la fecha de entrega y los datos de pago.</p>
+    </div>
+  </div>
+</div>
+
+<script>
+/* =========================================================
+   CONFIG · editar acá precios y comisiones (en pesos y %)
+   Si un precio queda en null, la página muestra "a confirmar".
+   ========================================================= */
+const CONFIG = {
+  temporada: '2026/27',
+  precioCaja: null,            // caja de 5 kg, pedido de una vez
+  precioCajaSuscripcion: null, // caja de 5 kg dentro de una suscripción
+  comisionUnico: null,         // % de comisión del vendedor en pedidos de una vez
+  comisionSuscripcion: null,   // % de comisión del vendedor en suscripciones
+  entregasMin: 2, entregasMax: 10, entregasDefault: 4,
+  cajasMax: 50,
+  // Envío: mismo servicio que el formulario de Cotizar (llega a chericheriar@gmail.com)
+  endpoint: 'https://api.web3forms.com/submit',
+  accessKey: 'bc0d7736-6799-4583-8e31-4ce941f35367',
+  mail: 'chericheriar@gmail.com'
+};
+
+const $ = s => document.querySelector(s), $$ = s => [...document.querySelectorAll(s)];
+const money = n => n == null ? null : new Intl.NumberFormat('es-AR', {style:'currency', currency:'ARS', maximumFractionDigits:0}).format(n);
+const LS = {
+  get(k, d){ try{ const v = localStorage.getItem(k); return v ? JSON.parse(v) : d }catch(e){ return d } },
+  set(k, v){ try{ localStorage.setItem(k, JSON.stringify(v)) }catch(e){} }
+};
+const S = { tipo:'unico', cajas:1, frec:'semanal', entregas:CONFIG.entregasDefault, pago:'Transferencia' };
+let vendedor = LS.get('cc_vendedor', null);
+let enviando = false, ultimo = null;
+
+$$('.temp').forEach(e => e.textContent = CONFIG.temporada);
+
+/* ---------- Vendedor ---------- */
+function pintarVendedor(){ $('#whoName').textContent = vendedor ? vendedor.nombre : '—' }
+function abrirVendedor(){
+  const f = $('#fv');
+  const qs = new URLSearchParams(location.search).get('v');
+  f.vnombre.value = vendedor ? vendedor.nombre : (qs || '');
+  f.vcel.value = vendedor ? vendedor.cel : '';
+  $('#shV').classList.add('open');
+  setTimeout(() => (f.vnombre.value ? f.vcel : f.vnombre).focus(), 250);
+}
+$('#fv').addEventListener('submit', e => {
+  e.preventDefault();
+  const f = e.target; let ok = true;
+  [f.vnombre, f.vcel].forEach(i => { const bad = !i.value.trim(); i.classList.toggle('err', bad); if (bad) ok = false });
+  if (!ok) return;
+  vendedor = { nombre: f.vnombre.value.trim(), cel: f.vcel.value.trim() };
+  LS.set('cc_vendedor', vendedor); pintarVendedor();
+  $('#shV').classList.remove('open');
+});
+$('#whoEdit').addEventListener('click', abrirVendedor);
+
+/* ---------- Cálculo ---------- */
+function calc(){
+  const sus = S.tipo === 'sus';
+  const totalCajas = sus ? S.cajas * S.entregas : S.cajas;
+  const precio = sus ? CONFIG.precioCajaSuscripcion : CONFIG.precioCaja;
+  const pct = sus ? CONFIG.comisionSuscripcion : CONFIG.comisionUnico;
+  const total = precio != null ? precio * totalCajas : null;
+  const comision = total != null && pct != null ? Math.round(total * pct / 100) : null;
+  const ahorro = sus && CONFIG.precioCaja != null && precio != null ? (CONFIG.precioCaja - precio) * totalCajas : null;
+  return { sus, totalCajas, precio, pct, total, comision, ahorro, kg: totalCajas * 5 };
+}
+function pintar(){
+  const c = calc();
+  $$('.type').forEach(b => b.classList.toggle('on', b.dataset.tipo === S.tipo));
+  $('#qty').classList.toggle('sus', c.sus);
+  $('#cajas').textContent = S.cajas;
+  $('#entregas').textContent = S.entregas;
+  $$('#frec button').forEach(b => b.classList.toggle('on', b.dataset.v === S.frec));
+  $('#qSub').textContent = c.sus ? 'en cada entrega' : `${c.kg} kg en total`;
+  $('#entSub').textContent = `${S.frec === 'semanal' ? 'una por semana' : 'cada 15 días'} · ${c.totalCajas} cajas`;
+  $('#fechaLbl').textContent = c.sus ? 'Primera entrega' : 'Fecha preferida';
+  // precios en las tarjetas
+  const pu = $('[data-p="unico"]');
+  pu.textContent = CONFIG.precioCaja != null ? `${money(CONFIG.precioCaja)} la caja` : '';
+  if (CONFIG.precioCajaSuscripcion != null) $('#susBadge').previousElementSibling.textContent = `Entregas fijas, ${money(CONFIG.precioCajaSuscripcion)} la caja.`;
+  const dif = CONFIG.comisionSuscripcion != null && CONFIG.comisionUnico != null ? CONFIG.comisionSuscripcion - CONFIG.comisionUnico : null;
+  $('#susBadge').textContent = CONFIG.comisionSuscripcion != null ? `Tu comisión: ${CONFIG.comisionSuscripcion}%` + (dif > 0 ? ` (vs. ${CONFIG.comisionUnico}%)` : '') : 'Más comisión para vos';
+  // barra
+  $('#tot').textContent = c.total != null ? money(c.total) : 'Precio a confirmar';
+  $('#det').textContent = c.sus
+    ? `${S.cajas} caja${S.cajas > 1 ? 's' : ''} × ${S.entregas} entregas ${S.frec === 'semanal' ? 'semanales' : 'quincenales'} · ${c.kg} kg`
+    : `${S.cajas} caja${S.cajas > 1 ? 's' : ''} de 5 kg · ${c.kg} kg`;
+  $('#com').textContent = c.comision != null ? `Tu comisión: ${money(c.comision)}` : '';
+}
+
+/* ---------- Controles ---------- */
+$$('.type').forEach(b => b.addEventListener('click', () => { S.tipo = b.dataset.tipo; pintar() }));
+$$('.stepper button').forEach(b => b.addEventListener('click', () => {
+  const k = b.dataset.d, d = +b.dataset.v;
+  const [min, max] = k === 'cajas' ? [1, CONFIG.cajasMax] : [CONFIG.entregasMin, CONFIG.entregasMax];
+  S[k] = Math.min(max, Math.max(min, S[k] + d)); pintar();
+}));
+$$('#frec button').forEach(b => b.addEventListener('click', () => { S.frec = b.dataset.v; pintar() }));
+$$('#pago button').forEach(b => b.addEventListener('click', () => {
+  S.pago = b.textContent; $$('#pago button').forEach(x => x.classList.toggle('on', x === b));
+}));
+$$('.tabs button').forEach(b => b.addEventListener('click', () => {
+  const t = b.dataset.tab;
+  $$('.tabs button').forEach(x => x.classList.toggle('on', x === b));
+  $('#f').hidden = t !== 'nuevo'; $('#mios').hidden = t !== 'mios'; $('#bar').hidden = t !== 'nuevo';
+  if (t === 'mios') pintarMios();
+  window.scrollTo(0, 0);
+}));
+
+/* ---------- Pedido ---------- */
+function telWA(t){
+  let d = String(t || '').replace(/\D/g, '');
+  if (!d) return '';
+  if (d.startsWith('54')) return d.startsWith('549') ? d : '549' + d.slice(2);
+  return '549' + d.replace(/^0/, '');
+}
+function fechaTxt(v){
+  if (!v) return 'A coordinar';
+  const [y, m, d] = v.split('-').map(Number);
+  return new Date(y, m - 1, d).toLocaleDateString('es-AR', { weekday:'long', day:'numeric', month:'long' });
+}
+function nuevoId(){
+  const n = new Date(), p = x => String(x).padStart(2, '0');
+  return `CC-${String(n.getFullYear()).slice(2)}${p(n.getMonth() + 1)}${p(n.getDate())}-${Math.random().toString(36).slice(2, 5).toUpperCase()}`;
+}
+function armarPedido(){
+  const f = $('#f'), c = calc();
+  return {
+    id: nuevoId(), creado: new Date().toISOString(),
+    tipo: c.sus ? 'Suscripción de temporada' : 'Una vez',
+    cajas: S.cajas, frecuencia: c.sus ? (S.frec === 'semanal' ? 'Semanal' : 'Quincenal') : '',
+    entregas: c.sus ? S.entregas : 1, totalCajas: c.totalCajas, kg: c.kg,
+    precio: c.precio, total: c.total, comisionPct: c.pct, comision: c.comision, ahorro: c.ahorro,
+    cliente: f.cliente.value.trim(), tel: f.tel.value.trim(), zona: f.zona.value.trim(),
+    direccion: f.direccion.value.trim(), fecha: f.fecha.value, franja: f.franja.value,
+    pago: S.pago, notas: f.notas.value.trim(),
+    vendedor: vendedor ? vendedor.nombre : '', vendedorCel: vendedor ? vendedor.cel : ''
+  };
+}
+function filas(p){
+  const r = [
+    ['Cliente', p.cliente], ['WhatsApp', p.tel], ['Zona', p.zona + (p.direccion ? ' · ' + p.direccion : '')],
+    ['Pedido', p.tipo === 'Una vez'
+      ? `${p.cajas} caja${p.cajas > 1 ? 's' : ''} de 5 kg`
+      : `${p.cajas} caja${p.cajas > 1 ? 's' : ''} × ${p.entregas} entregas (${p.frecuencia.toLowerCase()})`],
+    ['Total', `${p.totalCajas} cajas · ${p.kg} kg`],
+    [p.tipo === 'Una vez' ? 'Entrega' : 'Primera entrega', fechaTxt(p.fecha) + (p.franja !== 'Cualquiera' ? ' · ' + p.franja.toLowerCase() : '')],
+    ['Pago', p.pago]
+  ];
+  if (p.notas) r.push(['Notas', p.notas]);
+  return r;
+}
+function htmlRes(p){
+  const esc = s => String(s).replace(/[&<>"]/g, c => ({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;'}[c]));
+  let h = filas(p).map(([k, v]) => `<div><span>${k}</span><b>${esc(v)}</b></div>`).join('');
+  h += `<div class="big"><span>Importe</span><b>${p.total != null ? money(p.total) : 'A confirmar'}</b></div>`;
+  if (p.ahorro > 0) h += `<div><span>El cliente ahorra</span><b>${money(p.ahorro)}</b></div>`;
+  if (p.comision != null) h += `<div class="g"><span>Tu comisión</span><b>${money(p.comision)}</b></div>`;
+  return h;
+}
+function validar(){
+  const f = $('#f'); let primero = null;
+  ['cliente', 'tel', 'zona'].forEach(n => {
+    const i = f[n]; let bad = !i.value.trim();
+    if (n === 'tel' && !bad) bad = i.value.replace(/\D/g, '').length < 8;
+    i.classList.toggle('err', bad); if (bad && !primero) primero = i;
+  });
+  if (primero){ primero.scrollIntoView({ behavior:'smooth', block:'center' }); setTimeout(() => primero.focus(), 300); return false }
+  return true;
+}
+$$('#f input').forEach(i => i.addEventListener('input', () => i.classList.remove('err')));
+
+$('#go').addEventListener('click', () => {
+  if (!vendedor){ abrirVendedor(); return }
+  if (!validar()) return;
+  ultimo = armarPedido();
+  $('#rRes').innerHTML = htmlRes(ultimo);
+  $('#rErr').innerHTML = '';
+  $('#rView').hidden = false; $('#dView').hidden = true;
+  $('#send').disabled = false; $('#send').textContent = 'Enviar pedido';
+  $('#shR').classList.add('open');
+});
+$$('[data-close]').forEach(b => b.addEventListener('click', () => $('#shR').classList.remove('open')));
+$('#shR').addEventListener('click', e => { if (e.target.id === 'shR' && !enviando) $('#shR').classList.remove('open') });
+
+function textoPlano(p){
+  const L = filas(p).map(([k, v]) => `${k}: ${v}`);
+  L.push(`Importe: ${p.total != null ? money(p.total) : 'a confirmar'}`);
+  if (p.comision != null) L.push(`Comisión vendedor (${p.comisionPct}%): ${money(p.comision)}`);
+  L.push(`Vendedor: ${p.vendedor} (${p.vendedorCel})`, `Pedido: ${p.id}`);
+  return L.join('\n');
+}
+
+$('#send').addEventListener('click', async () => {
+  if (enviando || !ultimo) return;
+  enviando = true;
+  const btn = $('#send'); btn.disabled = true; btn.textContent = 'Enviando…';
+  const p = ultimo;
+  const asunto = `Pedido ${p.id} · ${p.totalCajas} caja${p.totalCajas > 1 ? 's' : ''}${p.tipo === 'Una vez' ? '' : ' (suscripción)'} · ${p.cliente} · vía ${p.vendedor}`;
+  const body = {
+    access_key: CONFIG.accessKey, subject: asunto, from_name: 'Pedidos Cheri Cheri',
+    'Pedido': p.id, 'Tipo': p.tipo,
+    'Cajas de 5 kg por entrega': p.cajas,
+    'Frecuencia': p.frecuencia || '—', 'Entregas': p.entregas,
+    'Total cajas': `${p.totalCajas} (${p.kg} kg)`,
+    'Precio por caja': p.precio != null ? money(p.precio) : 'A confirmar',
+    'Importe total': p.total != null ? money(p.total) : 'A confirmar',
+    'Comisión vendedor': p.comision != null ? `${money(p.comision)} (${p.comisionPct}%)` : '—',
+    'Cliente': p.cliente, 'WhatsApp cliente': p.tel, 'Link WhatsApp cliente': `https://wa.me/${telWA(p.tel)}`,
+    'Zona': p.zona, 'Dirección': p.direccion || '—',
+    [p.tipo === 'Una vez' ? 'Fecha preferida' : 'Primera entrega']: fechaTxt(p.fecha),
+    'Horario': p.franja, 'Pago': p.pago, 'Notas': p.notas || '—',
+    'Vendedor': p.vendedor, 'Celular vendedor': p.vendedorCel,
+    'Temporada': CONFIG.temporada,
+    'Cargado': new Date(p.creado).toLocaleString('es-AR')
+  };
+  let ok = false;
+  try{
+    const ctl = new AbortController(); const to = setTimeout(() => ctl.abort(), 15000);
+    const r = await fetch(CONFIG.endpoint, { method:'POST', headers:{ 'Content-Type':'application/json', 'Accept':'application/json' }, body: JSON.stringify(body), signal: ctl.signal });
+    clearTimeout(to);
+    const j = await r.json().catch(() => ({}));
+    ok = r.ok && (j.success === true || j.success === 'true');
+  }catch(e){ ok = false }
+  enviando = false;
+  if (ok){ exito(p) } else { fallo(p, asunto) }
+});
+
+function exito(p){
+  const h = LS.get('cc_pedidos', []); h.unshift(p); LS.set('cc_pedidos', h.slice(0, 300));
+  $('#rView').hidden = true; $('#dView').hidden = false;
+  $('#dLead').textContent = `Número ${p.id}. Ya está en el correo de Cheri Cheri.`;
+  $('#dRes').innerHTML = htmlRes(p);
+  const nombre = p.cliente.split(' ')[0];
+  const que = p.tipo === 'Una vez'
+    ? `${p.cajas} caja${p.cajas > 1 ? 's' : ''} de cerezas de 5 kg`
+    : `la suscripción de temporada: ${p.cajas} caja${p.cajas > 1 ? 's' : ''} de 5 kg en ${p.entregas} entregas ${p.frecuencia.toLowerCase()}es`;
+  const msg = `Hola ${nombre}! Soy ${p.vendedor}. Te confirmo que tomé tu pedido de Cheri Cheri: ${que}` +
+    (p.total != null ? `, por ${money(p.total)}` : '') +
+    `. Desde Cheri Cheri te escriben para coordinar la entrega y el pago. Pedido ${p.id}. Gracias!`;
+  const t = telWA(p.tel);
+  $('#waCli').href = `https://wa.me/${t}?text=${encodeURIComponent(msg)}`;
+  pintarContador();
+}
+function fallo(p, asunto){
+  const txt = textoPlano(p);
+  const mailto = `mailto:${CONFIG.mail}?subject=${encodeURIComponent(asunto)}&body=${encodeURIComponent(txt)}`;
+  $('#rErr').innerHTML = `<div class="alert"><b>No se pudo enviar.</b> Revisá la conexión y probá de nuevo. Si sigue sin salir, mandalo por mail a ${CONFIG.mail}: <a href="${mailto}" style="color:var(--red);font-weight:600">abrir mail con el pedido</a>.</div>`;
+  const btn = $('#send'); btn.disabled = false; btn.textContent = 'Reintentar';
+}
+
+$('#otro').addEventListener('click', () => {
+  const f = $('#f'); f.reset();
+  Object.assign(S, { tipo:'unico', cajas:1, frec:'semanal', entregas:CONFIG.entregasDefault, pago:'Transferencia' });
+  $$('#pago button').forEach((x, i) => x.classList.toggle('on', i === 0));
+  $('#shR').classList.remove('open'); pintar(); window.scrollTo(0, 0);
+});
+
+/* ---------- Mis pedidos ---------- */
+function pintarContador(){ const n = LS.get('cc_pedidos', []).length; $('#nMios').textContent = n ? `(${n})` : '' }
+function pintarMios(){
+  const h = LS.get('cc_pedidos', []);
+  $('#kPed').textContent = h.length;
+  $('#kCaj').textContent = h.reduce((a, p) => a + (p.totalCajas || 0), 0);
+  const com = h.reduce((a, p) => a + (p.comision || 0), 0);
+  $('#kCom').textContent = h.some(p => p.comision != null) ? money(com) : '—';
+  const esc = s => String(s).replace(/[&<>"]/g, c => ({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;'}[c]));
+  $('#lista').innerHTML = h.length ? h.map(p => `
+    <div class="it">
+      <b>${esc(p.cliente)}${p.tipo !== 'Una vez' ? '<span class="tag">Suscripción</span>' : ''}</b>
+      <span class="r">${p.total != null ? money(p.total) : p.totalCajas + ' cajas'}</span>
+      <small>${new Date(p.creado).toLocaleDateString('es-AR', { day:'numeric', month:'short' })} · ${p.totalCajas} cajas · ${esc(p.zona)}</small>
+      <small style="text-align:right;color:var(--green);font-weight:600">${p.comision != null ? money(p.comision) : ''}</small>
+    </div>`).join('') : '<div class="empty">Todavía no cargaste pedidos desde este teléfono.</div>';
+}
+
+/* ---------- Inicio ---------- */
+pintarVendedor(); pintar(); pintarContador();
+if (!vendedor) abrirVendedor();
+</script>
+</body>
+</html>
