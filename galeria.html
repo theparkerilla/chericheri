@@ -23,7 +23,7 @@
 <!-- seo:end -->
 
 <link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,700;0,900;1,400;1,700&family=Bitter:ital,wght@0,300;0,400;0,500;1,400&family=PT+Sans:ital,wght@0,400;0,700;1,400;1,700&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400..900;1,400..900&family=Bitter:ital,wght@0,300..700;1,300..700&family=PT+Sans:ital,wght@0,400;0,700;1,400;1,700&display=swap" rel="stylesheet">
 <style>
 :root{--red:#DA4143;--paper:#F9F8F2;--paper2:#F7F4EC;--ink:#333;--dark:#1a1a1a;--rule:rgba(218,65,67,.4);--grey:#636363;
  --pf:'Playfair Display',Georgia,serif;--bt:'Bitter',Georgia,serif;--pt:'PT Sans',Arial,sans-serif}
@@ -381,6 +381,7 @@ h1,h2{letter-spacing:-.012em;line-height:1!important}
 .gal .word .rules{position:relative}
 @media (max-width:900px){.gal figure{width:80%}.gal .word{top:20vh}}
 </style>
+<link rel="stylesheet" href="dm.css"><script src="dm.js" defer></script>
 </head>
 <body data-p="galeria">
 <svg width="0" height="0" style="position:absolute" aria-hidden="true"><defs>
@@ -431,7 +432,7 @@ h1,h2{letter-spacing:-.012em;line-height:1!important}
   </div>
 </div>
 <script>window.CC_T=Object.assign(window.CC_T||{},{"La playlist de Cheri Cheri, desde Spotify.": "The Cheri Cheri playlist, from Spotify.", "Abrir en Spotify ↗": "Open in Spotify ↗", "Suena desde Spotify. Con tu cuenta abierta se escucha completa; si no, Spotify reproduce adelantos.": "Plays from Spotify. Signed in, you hear the full tracks; otherwise Spotify plays previews.", "Silenciar la música": "Mute the music"});window.CC_DC=Object.assign(window.CC_DC||{},{});</script><script>
-const MAIL='chericheriar@gmail.com', ENDPOINT='https://formsubmit.co/ajax/'+MAIL;
+const MAIL='chericheriar@gmail.com', ENDPOINT='https://api.web3forms.com/submit', W3F_KEY='bc0d7736-6799-4583-8e31-4ce941f35367';
 const $=(s,c=document)=>c.querySelector(s), $$=(s,c=document)=>[...c.querySelectorAll(s)];
 const io=new IntersectionObserver(es=>es.forEach(e=>{if(e.isIntersecting){e.target.classList.add('in');io.unobserve(e.target)}}),{threshold:.1});
 $$('.rv').forEach(el=>io.observe(el));
@@ -440,7 +441,7 @@ $$('[data-closemenu], nav.main a, nav.main button').forEach(a=>a.addEventListene
 $$('[data-open]').forEach(b=>b.addEventListener('click',()=>{document.body.classList.remove('menu');setTimeout(()=>$('#cotizar').scrollIntoView({behavior:'smooth'}),document.body.classList.contains('menu')?900:0);setTimeout(()=>$('input[name=empresa]').focus(),1600)}));
 
 const _f=$('#f');_f&&_f.addEventListener('submit',async e=>{e.preventDefault();const f=e.target;if(!f.reportValidity())return;const d=Object.fromEntries(new FormData(f).entries());d.temporada='2026/27';const lines=Object.entries(d).map(([k,v])=>`${k}: ${v}`).join('\n');const mailto=`mailto:${MAIL}?subject=${encodeURIComponent('Cotización Cheri Cheri · '+d.cajas+' cajas · '+d.empresa)}&body=${encodeURIComponent(lines)}`;
- let ok=false;if(ENDPOINT){const btn=f.querySelector('[type=submit]');btn&&(btn.disabled=true);try{const r=await fetch(ENDPOINT,{method:'POST',headers:{'Content-Type':'application/json','Accept':'application/json'},body:JSON.stringify({...d,_subject:'Cotización Cheri Cheri · '+d.cajas+' cajas · '+d.empresa,_template:'table',_captcha:'false',_replyto:d.email||''})});ok=r.ok}catch(err){ok=false}btn&&(btn.disabled=false)}
+ let ok=false;if(ENDPOINT&&W3F_KEY){const btn=f.querySelector('[type=submit]');btn&&(btn.disabled=true);try{const L={empresa:'Empresa',email:'Email',cajas:'Cajas de 5 kg',frecuencia:'Frecuencia',zona:'Zona de entrega',fecha:'Primera entrega',tipo:'Tipo de negocio',mensaje:'Mensaje',temporada:'Temporada'};const body={};Object.entries(d).forEach(([k,v])=>{body[L[k]||k]=String(v||'').trim()||'—'});body['Idioma']=document.documentElement.lang||'es';body['Página']=location.href;Object.assign(body,{access_key:W3F_KEY,subject:'Cotización Cheri Cheri · '+d.cajas+' cajas · '+d.empresa,from_name:'Sitio Cheri Cheri',replyto:d.email||''});const r=await fetch(ENDPOINT,{method:'POST',headers:{'Content-Type':'application/json','Accept':'application/json'},body:JSON.stringify(body)});const j=await r.json().catch(()=>({}));ok=r.ok&&(j.success===true||j.success==='true');if(!ok)console.warn('FormSubmit:',j.message||r.status)}catch(err){ok=false}btn&&(btn.disabled=false)}
  if(!ok){$('#doneMail').textContent=`Si tu correo no se abrió solo, escribinos a ${MAIL}.`;location.href=mailto}
  f.style.display='none';$('#done').classList.add('show')});
 </script><script>
