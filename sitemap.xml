@@ -1,13 +1,15 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9" xmlns:xhtml="http://www.w3.org/1999/xhtml">
-<url><loc>https://chericheri.ar/</loc><lastmod>2026-11-03</lastmod><changefreq>weekly</changefreq><priority>1.0</priority>
+<url><loc>https://chericheri.ar/</loc><lastmod>2026-11-07</lastmod><changefreq>weekly</changefreq><priority>1.0</priority>
 <xhtml:link rel="alternate" hreflang="es" href="https://chericheri.ar/"/><xhtml:link rel="alternate" hreflang="en" href="https://chericheri.ar/?lang=en"/></url>
-<url><loc>https://chericheri.ar/carta.html</loc><lastmod>2026-11-03</lastmod><changefreq>monthly</changefreq><priority>0.8</priority>
+<url><loc>https://chericheri.ar/carta.html</loc><lastmod>2026-11-07</lastmod><changefreq>monthly</changefreq><priority>0.8</priority>
 <xhtml:link rel="alternate" hreflang="es" href="https://chericheri.ar/carta.html"/><xhtml:link rel="alternate" hreflang="en" href="https://chericheri.ar/carta.html?lang=en"/></url>
-<url><loc>https://chericheri.ar/nosotros.html</loc><lastmod>2026-11-03</lastmod><changefreq>monthly</changefreq><priority>0.8</priority>
+<url><loc>https://chericheri.ar/nosotros.html</loc><lastmod>2026-11-07</lastmod><changefreq>monthly</changefreq><priority>0.8</priority>
 <xhtml:link rel="alternate" hreflang="es" href="https://chericheri.ar/nosotros.html"/><xhtml:link rel="alternate" hreflang="en" href="https://chericheri.ar/nosotros.html?lang=en"/></url>
-<url><loc>https://chericheri.ar/cotizar.html</loc><lastmod>2026-11-03</lastmod><changefreq>monthly</changefreq><priority>0.8</priority>
+<url><loc>https://chericheri.ar/cotizar.html</loc><lastmod>2026-11-07</lastmod><changefreq>monthly</changefreq><priority>0.8</priority>
 <xhtml:link rel="alternate" hreflang="es" href="https://chericheri.ar/cotizar.html"/><xhtml:link rel="alternate" hreflang="en" href="https://chericheri.ar/cotizar.html?lang=en"/></url>
-<url><loc>https://chericheri.ar/galeria.html</loc><lastmod>2026-11-03</lastmod><changefreq>monthly</changefreq><priority>0.8</priority>
+<url><loc>https://chericheri.ar/preguntas.html</loc><lastmod>2026-11-07</lastmod><changefreq>monthly</changefreq><priority>0.8</priority>
+<xhtml:link rel="alternate" hreflang="es" href="https://chericheri.ar/preguntas.html"/><xhtml:link rel="alternate" hreflang="en" href="https://chericheri.ar/preguntas.html?lang=en"/></url>
+<url><loc>https://chericheri.ar/galeria.html</loc><lastmod>2026-11-07</lastmod><changefreq>monthly</changefreq><priority>0.8</priority>
 <xhtml:link rel="alternate" hreflang="es" href="https://chericheri.ar/galeria.html"/><xhtml:link rel="alternate" hreflang="en" href="https://chericheri.ar/galeria.html?lang=en"/></url>
 </urlset>

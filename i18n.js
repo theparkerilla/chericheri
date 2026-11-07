@@ -42,6 +42,7 @@ const DC={
 "legí el formato y contanos cuánto, cuándo y dónde. Respondemos por email en el día con precio de temporada, disponibilidad y calendario de entregas. Las ventas nunca se gestionan por Instagram.":["T","ell us how many boxes, how often and where. We reply by email the same day with season price, availability and delivery schedule. Sales are never handled through Instagram."],
 "odo lo que está en esta carta se vende por cajas de 5 kg a restaurantes, bares, hoteles, caterings y distribuidores. Contanos cuántas cajas, con qué frecuencia y dónde, y te respondemos con precio de temporada en el día.":["E","verything on this menu is sold by the 5 kg box to restaurants, bars, hotels, caterers and distributors. Tell us how many boxes, how often and where, and we'll reply with the season price the same day."]
 };
+if(window.CC_T)Object.assign(T,window.CC_T);if(window.CC_DC)Object.assign(DC,window.CC_DC);
 const ATTR=['placeholder','alt','aria-label'];
 const nodes=[];
 function collect(root){const w=document.createTreeWalker(root,NodeFilter.SHOW_TEXT,{acceptNode:n=>{const p=n.parentNode;if(!p||['SCRIPT','STYLE'].includes(p.nodeName)||p.closest('svg'))return NodeFilter.FILTER_REJECT;return n.nodeValue.trim()?NodeFilter.FILTER_ACCEPT:NodeFilter.FILTER_REJECT}});let n;while(n=w.nextNode())nodes.push({n,es:n.nodeValue});}
