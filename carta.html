@@ -209,7 +209,7 @@ body.menu nav.main .btn{opacity:1}
 body.menu #veil{opacity:1;pointer-events:auto}
 @media (max-width:760px){nav.main{left:12px;top:12px;width:calc(100vw - 24px);height:calc(100vh - 24px);padding:30px 26px}body.menu .page{transform:translateX(30vw) scale(1.08)}}
 @media (prefers-reduced-motion:reduce){.page,nav.main,nav.main a{transition:none!important}} .top{position:relative} .lang{position:absolute;right:0;top:calc(100% + 10px);z-index:20;display:flex;gap:6px;align-items:center;font-family:var(--pt);font-style:italic;font-weight:700;font-size:12px;letter-spacing:.1em;color:var(--grey)} .lang button{color:var(--grey);padding:4px 2px;min-height:0} .lang button.on{color:var(--red);text-decoration:underline;text-underline-offset:4px} @media (max-width:760px){.lang{top:calc(100% + 6px)}}  /* headings — Da Maria spec */ h1,h2{letter-spacing:-.012em;line-height:1!important} .redbox{padding:24px 16px!important} .redbox .lbl{font-family:var(--bt)!important;font-style:normal!important;font-weight:400!important;text-transform:none!important;letter-spacing:0!important;font-size:18px!important;color:#fff;display:block!important;margin-bottom:6px} .redbox .lbl::after{display:none!important} .redbox h2{font-size:clamp(44px,9.2vw,208px)!important;line-height:1!important;letter-spacing:-.01em!important;margin:0!important;overflow-wrap:normal} .side .redbox h2,.reserve .redbox h2,.order .right .redbox h2{font-size:clamp(40px,5.2vw,112px)!important} .who .text .redbox h2,.philo .redbox h2{font-size:clamp(48px,7.6vw,160px)!important} .eyebrow{font-family:var(--bt)!important;font-style:normal!important;font-weight:400!important;text-transform:none!important;letter-spacing:0!important;font-size:18px!important;color:var(--red)} .ph1 h1{letter-spacing:-.013em} /* per-letter reveal */ .rvl .w{display:inline-block;white-space:nowrap} .rvl .l{display:inline-block;opacity:0;transform:translateX(12px);transition:opacity .45s ease,transform .45s ease} .rvl.on .l{opacity:1;transform:none} @media (prefers-reduced-motion:reduce){.rvl .l{opacity:1;transform:none;transition:none}}   .top{position:relative} .lang{position:absolute;right:0;top:calc(100% + 10px);z-index:20;display:flex;gap:6px;align-items:center;font-family:var(--pt);font-style:italic;font-weight:700;font-size:12px;letter-spacing:.1em;color:var(--grey)} .lang button{color:var(--grey);padding:4px 2px;min-height:0} .lang button.on{color:var(--red);text-decoration:underline;text-underline-offset:4px} @media (max-width:760px){.lang{top:calc(100% + 6px)}} /* seo-fix */ header.top{z-index:30}/*feat-css*/
-img{max-width:100%}img.ill,.prod img,.feat img,.ill{height:auto}
+img{max-width:100%;height:auto}
 .mk{display:block;width:22px;height:26px;color:var(--red);margin:0 auto 4px}
 .masthead .mk{position:absolute;left:12px;top:50%;transform:translateY(-50%)}
 .orn{display:flex;align-items:center;gap:18px;margin:14px 0 26px;color:var(--red)}
@@ -284,7 +284,8 @@ setTimeout(()=>{document.querySelectorAll('.rv:not(.in)').forEach(el=>{if(el.get
  .prod b{align-self:end}.prod span{align-self:start}
  .feat{grid-template-columns:1fr!important;text-align:center!important;gap:12px!important}
  .feat .ill{width:60%!important;margin:0 auto!important}
- .sec{font-size:22px!important;letter-spacing:.02em!important;gap:10px!important;line-height:1.15!important}
+ .sec{font-size:20px!important;letter-spacing:.02em!important;gap:8px!important;line-height:1.15!important;flex-wrap:wrap!important;row-gap:2px!important}
+ .sec::before,.sec::after{display:none}
  .orn svg{width:24px;height:28px}
  .scb .btns .btn{display:block;margin:0 0 10px;text-align:center}
  .music .pill{padding:8px 10px}
