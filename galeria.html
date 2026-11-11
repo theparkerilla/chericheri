@@ -19,6 +19,8 @@
 <meta name="twitter:card" content="summary_large_image"><meta name="twitter:title" content="Galería · Cerezas Cheri Cheri en la mesa y en la barra"><meta name="twitter:description" content="Fotos de la temporada Cheri Cheri: cerezas de Alto Agrelo en platos, postres, cócteles y en la mesa de los que las sirven."><meta name="twitter:image" content="https://chericheri.ar/img/og.jpg">
 <link rel="icon" href="/favicon.ico" sizes="32x32"><link rel="icon" href="/icon.svg" type="image/svg+xml"><link rel="apple-touch-icon" href="/apple-touch-icon.png"><link rel="manifest" href="/site.webmanifest">
 <link rel="sitemap" type="application/xml" href="/sitemap.xml">
+<link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="alternate" type="text/plain" href="/llms.txt" title="llms.txt">
 <script type="application/ld+json">{"@context":"https://schema.org","@graph":[{"@type":"Organization","@id":"https://chericheri.ar/#org","name":"Cheri Cheri","alternateName":"Cheri Cheri Cerezas","url":"https://chericheri.ar","logo":{"@type":"ImageObject","url":"https://chericheri.ar/img/logo.png"},"image":"https://chericheri.ar/img/og.jpg","slogan":"Cherries & the season","description":"Marca de cerezas premium de Alto Agrelo (Luján de Cuyo, Mendoza, Argentina). Venta mayorista en cajas de 5 kg y pallets a restaurantes, bares, hoteles, caterings y distribuidores, sólo en temporada.","email":"chericheriar@gmail.com","sameAs":["https://instagram.com/chericheri.ar"],"address":{"@type":"PostalAddress","addressLocality":"Alto Agrelo","addressRegion":"Mendoza","addressCountry":"AR"},"areaServed":{"@type":"Country","name":"Argentina"},"contactPoint":{"@type":"ContactPoint","contactType":"sales","email":"chericheriar@gmail.com","availableLanguage":["es","en"]},"knowsAbout":["cerezas","cherries","Royal Dawn","Brooks","Frisco","Santina","Bing","Lapins","venta mayorista de fruta","gastronomía"]},{"@type":"Organization","@id":"https://www.southerncrops.com.ar/#org","name":"Southern Crops by Río Alara","url":"https://www.southerncrops.com.ar/","description":"Productor y exportador argentino de cereza fresca, con fincas en Alto Agrelo (Mendoza) y Los Antiguos (Santa Cruz). Productor y aliado de Cheri Cheri."},{"@type":"WebSite","@id":"https://chericheri.ar/#site","url":"https://chericheri.ar","name":"Cheri Cheri","publisher":{"@id":"https://chericheri.ar/#org"},"inLanguage":["es","en"]},{"@type":"WebPage","@id":"https://chericheri.ar/galeria.html","url":"https://chericheri.ar/galeria.html","name":"Galería · Cerezas Cheri Cheri en la mesa y en la barra","description":"Fotos de la temporada Cheri Cheri: cerezas de Alto Agrelo en platos, postres, cócteles y en la mesa de los que las sirven.","isPartOf":{"@id":"https://chericheri.ar/#site"},"about":{"@id":"https://chericheri.ar/#org"},"inLanguage":"es","primaryImageOfPage":"https://chericheri.ar/img/og.jpg"},{"@type":"BreadcrumbList","itemListElement":[{"@type":"ListItem","position":1,"name":"Inicio","item":"https://chericheri.ar/"},{"@type":"ListItem","position":2,"name":"Galería","item":"https://chericheri.ar/galeria.html"}]},{"@type":"ImageGallery","@id":"https://chericheri.ar/galeria.html#gallery","url":"https://chericheri.ar/galeria.html","name":"Galería Cheri Cheri","about":{"@id":"https://chericheri.ar/#org"}}]}</script>
 <!-- seo:end -->
 
@@ -239,6 +241,10 @@ body.menu #veil{opacity:1;pointer-events:auto}
 .faq .toc{display:flex;flex-wrap:wrap;justify-content:center;gap:10px 26px;margin:22px 0 0;font-family:var(--pt);font-style:italic;font-weight:700;text-transform:uppercase;font-size:13px;letter-spacing:.06em}
 .faq .toc a{color:var(--red);border-bottom:1px solid var(--rule)}
 @media(max-width:700px){.qa summary{font-size:19px;grid-template-columns:1fr auto}.faq h2.sec{font-size:22px!important;letter-spacing:.04em!important;gap:10px}.masthead .mk{display:none}}
+/* reveal safety: tall blocks reveal as soon as they touch the viewport; fallback if observers never fire */
+const SAFE=()=>{document.querySelectorAll('.rv:not(.in)').forEach(el=>{const r=el.getBoundingClientRect();if(r.top<innerHeight*0.92&&r.bottom>0)el.classList.add('in')});document.querySelectorAll('.rvl:not(.on)').forEach(el=>{const r=el.getBoundingClientRect();if(r.top<innerHeight*0.95&&r.bottom>0)el.classList.add('on')})};
+let sT;addEventListener('scroll',()=>{clearTimeout(sT);sT=setTimeout(SAFE,80)},{passive:true});addEventListener('load',()=>{SAFE();setTimeout(SAFE,600)});setTimeout(SAFE,300);
+setTimeout(()=>{document.querySelectorAll('.rv:not(.in)').forEach(el=>{if(el.getBoundingClientRect().top<innerHeight)el.classList.add('in')})},2500);
 /* staggered reveal */
 .sg>*{opacity:0;transform:translateY(14px);transition:opacity .7s ease,transform .7s ease}
 .sg.in>*{opacity:1;transform:none}
@@ -279,6 +285,13 @@ body.menu #veil{opacity:1;pointer-events:auto}
  .orn svg{width:24px;height:28px}
  .scb .btns .btn{display:block;margin:0 0 10px;text-align:center}
  .music .pill{padding:8px 10px}
+ html,body{overflow-x:hidden;-webkit-text-size-adjust:100%}
+ .sheet::before{display:none}
+ .sheet,.ph1 .rules h1,.gal figure,.facts hr::after{background:#F9F8F2 url(img/paper.png) 0 0/560px 560px repeat!important;background-blend-mode:multiply}
+ .ph1 .rules::before{display:none}
+ .page,.sheet{margin-left:auto;margin-right:auto}
+ .ph1 h1,.ph1 p{text-align:center}
+ .rv{transform:translateY(12px)}
 }
 /*feat-css-end*/</style>
 <style>
@@ -414,14 +427,14 @@ h1,h2{letter-spacing:-.012em;line-height:1!important}
 <section class="gal">
   <div class="word"><div class="rules"><h1 style="font-size:inherit"><span>Inside</span><span>Cheri</span></h1></div></div>
   <div class="pics">
-    <figure><img loading="lazy" decoding="async" src="img/g1.jpg" alt="Copa de helado con cerezas"></figure>
-    <figure><img loading="lazy" decoding="async" src="img/plato.jpg" alt="Plato con burrata y cerezas"></figure>
-    <figure><img loading="lazy" decoding="async" src="img/g2.jpg" alt="Mujer riendo con una cereza"></figure>
-    <figure><img loading="lazy" decoding="async" src="img/g3.jpg" alt="Mesa con cerezas y copas"></figure>
-    <figure><img loading="lazy" decoding="async" src="img/g4.jpg" alt="Camarero con bandeja de cerezas"></figure>
-    <figure><img loading="lazy" decoding="async" src="img/trago.jpg" alt="Cóctel de cereza al sol"></figure>
-    <figure><img loading="lazy" decoding="async" src="img/cocina.jpg" alt="Cocinero sirviendo cerezas sobre pavlova"></figure>
-    <figure><img fetchpriority="high" decoding="async" src="img/hero.jpg" alt="Mano tomando una cereza del bowl"></figure>
+    <figure><img loading="lazy" decoding="async" width="1820" height="1366" src="img/g1.jpg" alt="Copa de helado con cerezas"></figure>
+    <figure><img loading="lazy" decoding="async" width="1083" height="1353" src="img/plato.jpg" alt="Plato con burrata y cerezas"></figure>
+    <figure><img loading="lazy" decoding="async" width="1025" height="1366" src="img/g2.jpg" alt="Mujer riendo con una cereza"></figure>
+    <figure><img loading="lazy" decoding="async" width="1820" height="1366" src="img/g3.jpg" alt="Mesa con cerezas y copas"></figure>
+    <figure><img loading="lazy" decoding="async" width="1025" height="1366" src="img/g4.jpg" alt="Camarero con bandeja de cerezas"></figure>
+    <figure><img loading="lazy" decoding="async" width="1083" height="1353" src="img/trago.jpg" alt="Cóctel de cereza al sol"></figure>
+    <figure><img loading="lazy" decoding="async" width="1014" height="1353" src="img/cocina.jpg" alt="Cocinero sirviendo cerezas sobre pavlova"></figure>
+    <figure><img fetchpriority="high" decoding="async" width="1811" height="1353" src="img/hero.jpg" alt="Mano tomando una cereza del bowl"></figure>
   </div>
 </section>
 <footer role="contentinfo">

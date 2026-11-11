@@ -19,6 +19,8 @@
 <meta name="twitter:card" content="summary_large_image"><meta name="twitter:title" content="Nosotros · La comunidad Cheri Cheri: productores, chefs y bartenders"><meta name="twitter:description" content="Cheri Cheri es una comunidad alrededor de la cereza bien hecha: los productores de Alto Agrelo que la cultivan, los chefs y bartenders que la sirven y la gente que la espera cada temporada."><meta name="twitter:image" content="https://chericheri.ar/img/og.jpg">
 <link rel="icon" href="/favicon.ico" sizes="32x32"><link rel="icon" href="/icon.svg" type="image/svg+xml"><link rel="apple-touch-icon" href="/apple-touch-icon.png"><link rel="manifest" href="/site.webmanifest">
 <link rel="sitemap" type="application/xml" href="/sitemap.xml">
+<link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="alternate" type="text/plain" href="/llms.txt" title="llms.txt">
 <script type="application/ld+json">{"@context":"https://schema.org","@graph":[{"@type":"Organization","@id":"https://chericheri.ar/#org","name":"Cheri Cheri","alternateName":"Cheri Cheri Cerezas","url":"https://chericheri.ar","logo":{"@type":"ImageObject","url":"https://chericheri.ar/img/logo.png"},"image":"https://chericheri.ar/img/og.jpg","slogan":"Cherries & the season","description":"Marca de cerezas premium de Alto Agrelo (Luján de Cuyo, Mendoza, Argentina). Venta mayorista en cajas de 5 kg y pallets a restaurantes, bares, hoteles, caterings y distribuidores, sólo en temporada.","email":"chericheriar@gmail.com","sameAs":["https://instagram.com/chericheri.ar"],"address":{"@type":"PostalAddress","addressLocality":"Alto Agrelo","addressRegion":"Mendoza","addressCountry":"AR"},"areaServed":{"@type":"Country","name":"Argentina"},"contactPoint":{"@type":"ContactPoint","contactType":"sales","email":"chericheriar@gmail.com","availableLanguage":["es","en"]},"knowsAbout":["cerezas","cherries","Royal Dawn","Brooks","Frisco","Santina","Bing","Lapins","venta mayorista de fruta","gastronomía"]},{"@type":"Organization","@id":"https://www.southerncrops.com.ar/#org","name":"Southern Crops by Río Alara","url":"https://www.southerncrops.com.ar/","description":"Productor y exportador argentino de cereza fresca, con fincas en Alto Agrelo (Mendoza) y Los Antiguos (Santa Cruz). Productor y aliado de Cheri Cheri."},{"@type":"WebSite","@id":"https://chericheri.ar/#site","url":"https://chericheri.ar","name":"Cheri Cheri","publisher":{"@id":"https://chericheri.ar/#org"},"inLanguage":["es","en"]},{"@type":"WebPage","@id":"https://chericheri.ar/nosotros.html","url":"https://chericheri.ar/nosotros.html","name":"Nosotros · La comunidad Cheri Cheri: productores, chefs y bartenders","description":"Cheri Cheri es una comunidad alrededor de la cereza bien hecha: los productores de Alto Agrelo que la cultivan, los chefs y bartenders que la sirven y la gente que la espera cada temporada.","isPartOf":{"@id":"https://chericheri.ar/#site"},"about":{"@id":"https://chericheri.ar/#org"},"inLanguage":"es","primaryImageOfPage":"https://chericheri.ar/img/og.jpg"},{"@type":"BreadcrumbList","itemListElement":[{"@type":"ListItem","position":1,"name":"Inicio","item":"https://chericheri.ar/"},{"@type":"ListItem","position":2,"name":"Nosotros","item":"https://chericheri.ar/nosotros.html"}]},{"@type":"AboutPage","@id":"https://chericheri.ar/nosotros.html#about","url":"https://chericheri.ar/nosotros.html","name":"Nosotros","about":{"@id":"https://chericheri.ar/#org"}}]}</script>
 <!-- seo:end -->
 
@@ -239,6 +241,10 @@ body.menu #veil{opacity:1;pointer-events:auto}
 .faq .toc{display:flex;flex-wrap:wrap;justify-content:center;gap:10px 26px;margin:22px 0 0;font-family:var(--pt);font-style:italic;font-weight:700;text-transform:uppercase;font-size:13px;letter-spacing:.06em}
 .faq .toc a{color:var(--red);border-bottom:1px solid var(--rule)}
 @media(max-width:700px){.qa summary{font-size:19px;grid-template-columns:1fr auto}.faq h2.sec{font-size:22px!important;letter-spacing:.04em!important;gap:10px}.masthead .mk{display:none}}
+/* reveal safety: tall blocks reveal as soon as they touch the viewport; fallback if observers never fire */
+const SAFE=()=>{document.querySelectorAll('.rv:not(.in)').forEach(el=>{const r=el.getBoundingClientRect();if(r.top<innerHeight*0.92&&r.bottom>0)el.classList.add('in')});document.querySelectorAll('.rvl:not(.on)').forEach(el=>{const r=el.getBoundingClientRect();if(r.top<innerHeight*0.95&&r.bottom>0)el.classList.add('on')})};
+let sT;addEventListener('scroll',()=>{clearTimeout(sT);sT=setTimeout(SAFE,80)},{passive:true});addEventListener('load',()=>{SAFE();setTimeout(SAFE,600)});setTimeout(SAFE,300);
+setTimeout(()=>{document.querySelectorAll('.rv:not(.in)').forEach(el=>{if(el.getBoundingClientRect().top<innerHeight)el.classList.add('in')})},2500);
 /* staggered reveal */
 .sg>*{opacity:0;transform:translateY(14px);transition:opacity .7s ease,transform .7s ease}
 .sg.in>*{opacity:1;transform:none}
@@ -279,6 +285,13 @@ body.menu #veil{opacity:1;pointer-events:auto}
  .orn svg{width:24px;height:28px}
  .scb .btns .btn{display:block;margin:0 0 10px;text-align:center}
  .music .pill{padding:8px 10px}
+ html,body{overflow-x:hidden;-webkit-text-size-adjust:100%}
+ .sheet::before{display:none}
+ .sheet,.ph1 .rules h1,.gal figure,.facts hr::after{background:#F9F8F2 url(img/paper.png) 0 0/560px 560px repeat!important;background-blend-mode:multiply}
+ .ph1 .rules::before{display:none}
+ .page,.sheet{margin-left:auto;margin-right:auto}
+ .ph1 h1,.ph1 p{text-align:center}
+ .rv{transform:translateY(12px)}
 }
 /*feat-css-end*/</style>
 <style>
@@ -412,7 +425,7 @@ h1,h2{letter-spacing:-.012em;line-height:1!important}
 </header>
 
 <section class="ph1"><div class="rules"><h1>Nosotros</h1></div></section>
-<figure class="heroimg"><img fetchpriority="high" decoding="async" src="img/hero.jpg" alt="Manos seleccionando cerezas en la sala de empaque"></figure>
+<figure class="heroimg"><img fetchpriority="high" decoding="async" width="1811" height="1353" src="img/hero.jpg" alt="Manos seleccionando cerezas en la sala de empaque"></figure>
 <div class="twocol">
   <p>Cheri Cheri nació de una pregunta simple: ¿por qué la mejor cereza argentina se va casi toda al exterior? La respuesta fue juntar a los que la cultivan en Alto Agrelo con los que la saben servir acá: cocinas, barras y mesas que valoran lo de primera calidad y lo piden por su nombre.</p>
   <p>De un lado, productores que trabajan todo el año para que seis semanas de cosecha estén a la altura de cualquier mercado del mundo. Del otro, chefs, bartenders y consumidores que no aceptan una fruta cualquiera. En el medio, nosotros: elegimos una por una y no cortamos el frío hasta tu puerta.</p>
@@ -439,21 +452,21 @@ h1,h2{letter-spacing:-.012em;line-height:1!important}
     <h2>Quiénes<br>somos</h2>
     <p class="intro">Cheri Cheri no es una empresa: es la gente que se junta alrededor de una cereza bien hecha. Los que la cultivan, los que la eligen, los que la sirven y los que la piden por su nombre.</p>
     <div class="team">
-      <figure><img loading="lazy" decoding="async" src="img/t2.jpg" alt="Productor en el huerto con una caja de cerezas"><figcaption><b>Los productores</b><span>Familias de Alto Agrelo que trabajan todo el año para seis semanas de cosecha, con calidad para venderla en cualquier mesa del mundo.</span></figcaption></figure>
-      <figure><img loading="lazy" decoding="async" src="img/t3.jpg" alt="Cocinero probando una cereza"><figcaption><b>Los chefs</b><span>Cocinas que no aceptan una fruta cualquiera. Que la ponen en la carta sólo cuando está, y la sacan cuando se termina.</span></figcaption></figure>
-      <figure><img loading="lazy" decoding="async" src="img/t1.jpg" alt="Bartender con una cereza en la mano"><figcaption><b>Los bartenders</b><span>Barras que saben que una cereza con cabo en el borde de la copa cambia el trago. Y que no se reemplaza con una de frasco.</span></figcaption></figure>
-      <figure><img loading="lazy" decoding="async" src="img/t4.jpg" alt="Persona eligiendo cerezas una por una"><figcaption><b>Los que saben esperar</b><span>Consumidores que valoran lo de primera calidad, piden la temporada por su nombre y entienden que lo bueno se termina.</span></figcaption></figure>
+      <figure><img loading="lazy" decoding="async" width="1092" height="1366" src="img/t2.jpg" alt="Productor en el huerto con una caja de cerezas"><figcaption><b>Los productores</b><span>Familias de Alto Agrelo que trabajan todo el año para seis semanas de cosecha, con calidad para venderla en cualquier mesa del mundo.</span></figcaption></figure>
+      <figure><img loading="lazy" decoding="async" width="1092" height="1366" src="img/t3.jpg" alt="Cocinero probando una cereza"><figcaption><b>Los chefs</b><span>Cocinas que no aceptan una fruta cualquiera. Que la ponen en la carta sólo cuando está, y la sacan cuando se termina.</span></figcaption></figure>
+      <figure><img loading="lazy" decoding="async" width="1104" height="1366" src="img/t1.jpg" alt="Bartender con una cereza en la mano"><figcaption><b>Los bartenders</b><span>Barras que saben que una cereza con cabo en el borde de la copa cambia el trago. Y que no se reemplaza con una de frasco.</span></figcaption></figure>
+      <figure><img loading="lazy" decoding="async" width="1092" height="1366" src="img/t4.jpg" alt="Persona eligiendo cerezas una por una"><figcaption><b>Los que saben esperar</b><span>Consumidores que valoran lo de primera calidad, piden la temporada por su nombre y entienden que lo bueno se termina.</span></figcaption></figure>
     </div>
   </div>
   <div class="side">
     <div class="redbox"><span class="lbl">Al margen</span><h2>Datos<br>curiosos</h2></div>
     <div class="facts">
-      <img loading="lazy" decoding="async" class="ill" src="img/ill-rama.png" alt="">
+      <img loading="lazy" decoding="async" width="1246" height="601" alt="Grabado de una rama de cerezo" class="ill" src="img/ill-rama.png">
       <p>Una cereza se cosecha con el cabo: si se arranca sin él, pierde agua y dura la mitad. Por eso cada una pasa por una mano.</p>
       <hr>
       <p>El calibre se mide en milímetros de diámetro. 28 mm es grande; 30 mm es excepcional. Cheri Cheri no baja de 28.</p>
       <hr>
-      <img loading="lazy" decoding="async" class="ill" src="img/ill-bowl.png" alt="">
+      <img loading="lazy" decoding="async" width="788" height="842" alt="Grabado de un bowl con cerezas" class="ill" src="img/ill-bowl.png">
       <p>Del árbol a la cámara de frío pasan menos de dos horas. De la cámara a tu cocina, nunca más de un día.</p>
     </div>
   </div>
