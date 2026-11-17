@@ -19,7 +19,7 @@
   --pf:'Playfair Display',Georgia,serif;--bt:'Bitter',Georgia,serif}
 *{box-sizing:border-box;margin:0;padding:0}
 html{-webkit-text-size-adjust:100%}
-body{background:var(--paper) url(/img/paper.png) 0 0/740px repeat;background-blend-mode:multiply;color:var(--ink);font-family:var(--bt);font-weight:300;font-size:17px;line-height:1.5;min-height:100vh;padding:env(safe-area-inset-top) 0 calc(120px + env(safe-area-inset-bottom))}
+body{background:var(--paper) url(/img/paper.png) 0 0/740px repeat;color:var(--ink);font-family:var(--bt);font-weight:300;font-size:17px;line-height:1.5;min-height:100vh;padding:env(safe-area-inset-top) 0 calc(120px + env(safe-area-inset-bottom))}
 button,input,select,textarea{font:inherit;color:inherit}
 button{cursor:pointer;background:none;border:0}
 .wrap{max-width:560px;margin:0 auto;padding:0 16px}
@@ -133,6 +133,13 @@ header{position:sticky;top:0;z-index:20;background:var(--paper);border-bottom:3p
 .empty{text-align:center;color:var(--grey);padding:40px 10px;font-size:15px}
 .foot{margin-top:28px;text-align:center;font-family:var(--pf);font-style:italic;color:var(--grey);font-size:14px}
 [hidden]{display:none!important}
+/* Modo cliente (QR en eventos): /pedir */
+.intro{display:none;margin-top:20px;font-size:16.5px;line-height:1.5}
+.intro b{font-family:var(--pf);font-weight:700;font-size:26px;line-height:1.15;display:block;margin-bottom:6px}
+.intro b em{color:var(--red)}
+body.cli .intro{display:block}
+body.cli .who,body.cli .tabs{display:none}
+body.cli .badge{background:var(--red)}
 </style>
 </head>
 <body>
@@ -153,9 +160,10 @@ header{position:sticky;top:0;z-index:20;background:var(--paper);border-bottom:3p
 
 <!-- ============ NUEVO PEDIDO ============ -->
 <form id="f" novalidate autocomplete="off">
+  <div class="intro"><b>Cerezas de Alto Agrelo, <em>a tu casa.</em></b>Elegí cuántas cajas de 5 kg querés, dejanos tus datos y te escribimos por WhatsApp para coordinar la entrega.</div>
 
   <section class="step">
-    <div class="lbl"><i>1</i>¿Qué compra?</div>
+    <div class="lbl"><i>1</i><span data-c="¿Qué querés?">¿Qué compra?</span></div>
     <div class="types">
       <button type="button" class="type on" data-tipo="unico">
         <b>Una vez</b>
@@ -189,10 +197,10 @@ header{position:sticky;top:0;z-index:20;background:var(--paper);border-bottom:3p
   </section>
 
   <section class="step">
-    <div class="lbl"><i>3</i>¿Para quién?</div>
+    <div class="lbl"><i>3</i><span data-c="Tus datos">¿Para quién?</span></div>
     <div class="card">
       <label class="f"><span>Nombre y apellido</span><input name="cliente" required autocomplete="off" placeholder="Ej: Sofía Martínez"></label>
-      <label class="f"><span>WhatsApp del cliente</span><input name="tel" type="tel" inputmode="tel" required placeholder="11 2345 6789"><small class="hint">Código de área sin 0 y sin 15.</small></label>
+      <label class="f"><span data-c="Tu WhatsApp">WhatsApp del cliente</span><input name="tel" type="tel" inputmode="tel" required placeholder="11 2345 6789"><small class="hint">Código de área sin 0 y sin 15.</small></label>
       <label class="f"><span>Zona o barrio</span><input name="zona" required placeholder="Ej: Palermo, Nordelta, Mendoza Capital"></label>
       <label class="f"><span>Dirección de entrega <em>(opcional)</em></span><input name="direccion" placeholder="Calle, número, piso"></label>
     </div>
@@ -255,8 +263,8 @@ header{position:sticky;top:0;z-index:20;background:var(--paper);border-bottom:3p
 <div class="sheet" id="shR" role="dialog" aria-modal="true" aria-labelledby="rT">
   <div class="pane">
     <div id="rView">
-      <h2 id="rT">Revisá <em>el pedido</em></h2>
-      <p class="lead">Si está todo bien, enviá. Llega directo a Cheri Cheri.</p>
+      <h2 id="rT">Revisá <em data-c="tu pedido">el pedido</em></h2>
+      <p class="lead" data-c="Si está todo bien, confirmá. Te escribimos por WhatsApp para coordinar la entrega y el pago.">Si está todo bien, enviá. Llega directo a Cheri Cheri.</p>
       <div id="rErr"></div>
       <div class="res" id="rRes"></div>
       <div class="acts">
@@ -266,14 +274,15 @@ header{position:sticky;top:0;z-index:20;background:var(--paper);border-bottom:3p
     </div>
     <div id="dView" hidden>
       <div class="ok">✓</div>
-      <h2>Pedido <em>enviado</em></h2>
+      <h2>Pedido <em data-c="recibido">enviado</em></h2>
       <p class="lead" id="dLead"></p>
       <div class="res" id="dRes"></div>
       <div class="acts">
         <a class="btn wa block" id="waCli" href="#" target="_blank" rel="noopener">Avisarle al cliente por WhatsApp</a>
         <button type="button" class="btn ghost block" id="otro">Cargar otro pedido</button>
+        <a class="btn ghost block" id="verSitio" href="/" hidden>Conocé Cheri Cheri</a>
       </div>
-      <p class="note">Desde Cheri Cheri le confirmamos al cliente la fecha de entrega y los datos de pago.</p>
+      <p class="note" id="dNote">Desde Cheri Cheri le confirmamos al cliente la fecha de entrega y los datos de pago.</p>
     </div>
   </div>
 </div>
@@ -298,6 +307,16 @@ const CONFIG = {
 };
 
 const $ = s => document.querySelector(s), $$ = s => [...document.querySelectorAll(s)];
+const QS = new URLSearchParams(location.search);
+// Modo cliente: chericheri.ar/pedir (QR en eventos). ?e=Nombre del evento queda registrado en el pedido.
+const CLIENTE = location.pathname.replace(/\/+$/, '') === '/pedir' || QS.get('modo') === 'cliente';
+const EVENTO = (QS.get('e') || '').trim().slice(0, 60);
+if (CLIENTE){
+  document.body.classList.add('cli');
+  document.title = 'Pedí tus cerezas · Cheri Cheri';
+  $$('[data-c]').forEach(e => e.textContent = e.dataset.c);
+  $('.brand small').innerHTML = 'Cherries &amp; the season';
+}
 const money = n => n == null ? null : new Intl.NumberFormat('es-AR', {style:'currency', currency:'ARS', maximumFractionDigits:0}).format(n);
 const LS = {
   get(k, d){ try{ const v = localStorage.getItem(k); return v ? JSON.parse(v) : d }catch(e){ return d } },
@@ -335,7 +354,7 @@ function calc(){
   const sus = S.tipo === 'sus';
   const totalCajas = sus ? S.cajas * S.entregas : S.cajas;
   const precio = sus ? CONFIG.precioCajaSuscripcion : CONFIG.precioCaja;
-  const pct = sus ? CONFIG.comisionSuscripcion : CONFIG.comisionUnico;
+  const pct = CLIENTE ? null : (sus ? CONFIG.comisionSuscripcion : CONFIG.comisionUnico);
   const total = precio != null ? precio * totalCajas : null;
   const comision = total != null && pct != null ? Math.round(total * pct / 100) : null;
   const ahorro = sus && CONFIG.precioCaja != null && precio != null ? (CONFIG.precioCaja - precio) * totalCajas : null;
@@ -356,6 +375,10 @@ function pintar(){
   pu.textContent = CONFIG.precioCaja != null ? `${money(CONFIG.precioCaja)} la caja` : '';
   if (CONFIG.precioCajaSuscripcion != null) $('#susBadge').previousElementSibling.textContent = `Entregas fijas, ${money(CONFIG.precioCajaSuscripcion)} la caja.`;
   const dif = CONFIG.comisionSuscripcion != null && CONFIG.comisionUnico != null ? CONFIG.comisionSuscripcion - CONFIG.comisionUnico : null;
+  if (CLIENTE){
+    const ah = CONFIG.precioCaja != null && CONFIG.precioCajaSuscripcion != null ? CONFIG.precioCaja - CONFIG.precioCajaSuscripcion : null;
+    $('#susBadge').textContent = ah > 0 ? `Ahorrás ${money(ah)} por caja` : 'Mejor precio por caja';
+  } else
   $('#susBadge').textContent = CONFIG.comisionSuscripcion != null ? `Tu comisión: ${CONFIG.comisionSuscripcion}%` + (dif > 0 ? ` (vs. ${CONFIG.comisionUnico}%)` : '') : 'Más comisión para vos';
   // barra
   $('#tot').textContent = c.total != null ? money(c.total) : 'Precio a confirmar';
@@ -411,7 +434,8 @@ function armarPedido(){
     cliente: f.cliente.value.trim(), tel: f.tel.value.trim(), zona: f.zona.value.trim(),
     direccion: f.direccion.value.trim(), fecha: f.fecha.value, franja: f.franja.value,
     pago: S.pago, notas: f.notas.value.trim(),
-    vendedor: vendedor ? vendedor.nombre : '', vendedorCel: vendedor ? vendedor.cel : ''
+    vendedor: CLIENTE ? 'Pedido directo del cliente (QR)' : (vendedor ? vendedor.nombre : ''),
+    vendedorCel: CLIENTE ? '' : (vendedor ? vendedor.cel : ''), evento: EVENTO
   };
 }
 function filas(p){
@@ -448,7 +472,7 @@ function validar(){
 $$('#f input').forEach(i => i.addEventListener('input', () => i.classList.remove('err')));
 
 $('#go').addEventListener('click', () => {
-  if (!vendedor){ abrirVendedor(); return }
+  if (!vendedor && !CLIENTE){ abrirVendedor(); return }
   if (!validar()) return;
   ultimo = armarPedido();
   $('#rRes').innerHTML = htmlRes(ultimo);
@@ -464,7 +488,8 @@ function textoPlano(p){
   const L = filas(p).map(([k, v]) => `${k}: ${v}`);
   L.push(`Importe: ${p.total != null ? money(p.total) : 'a confirmar'}`);
   if (p.comision != null) L.push(`Comisión vendedor (${p.comisionPct}%): ${money(p.comision)}`);
-  L.push(`Vendedor: ${p.vendedor} (${p.vendedorCel})`, `Pedido: ${p.id}`);
+  L.push(`Vendedor: ${p.vendedor}${p.vendedorCel ? ' (' + p.vendedorCel + ')' : ''}`, `Pedido: ${p.id}`);
+  if (p.evento) L.push(`Evento: ${p.evento}`);
   return L.join('\n');
 }
 
@@ -473,7 +498,8 @@ $('#send').addEventListener('click', async () => {
   enviando = true;
   const btn = $('#send'); btn.disabled = true; btn.textContent = 'Enviando…';
   const p = ultimo;
-  const asunto = `Pedido ${p.id} · ${p.totalCajas} caja${p.totalCajas > 1 ? 's' : ''}${p.tipo === 'Una vez' ? '' : ' (suscripción)'} · ${p.cliente} · vía ${p.vendedor}`;
+  const via = CLIENTE ? 'QR' + (p.evento ? ' ' + p.evento : '') : p.vendedor;
+  const asunto = `Pedido ${p.id} · ${p.totalCajas} caja${p.totalCajas > 1 ? 's' : ''}${p.tipo === 'Una vez' ? '' : ' (suscripción)'} · ${p.cliente} · vía ${via}`;
   const body = {
     access_key: CONFIG.accessKey, subject: asunto, from_name: 'Pedidos Cheri Cheri',
     'Pedido': p.id, 'Tipo': p.tipo,
@@ -487,7 +513,7 @@ $('#send').addEventListener('click', async () => {
     'Zona': p.zona, 'Dirección': p.direccion || '—',
     [p.tipo === 'Una vez' ? 'Fecha preferida' : 'Primera entrega']: fechaTxt(p.fecha),
     'Horario': p.franja, 'Pago': p.pago, 'Notas': p.notas || '—',
-    'Vendedor': p.vendedor, 'Celular vendedor': p.vendedorCel,
+    'Vendedor': p.vendedor, 'Celular vendedor': p.vendedorCel || '—', 'Origen': CLIENTE ? 'QR / cliente directo' : 'Vendedor', 'Evento': p.evento || '—',
     'Temporada': CONFIG.temporada,
     'Cargado': new Date(p.creado).toLocaleString('es-AR')
   };
@@ -504,10 +530,16 @@ $('#send').addEventListener('click', async () => {
 });
 
 function exito(p){
-  const h = LS.get('cc_pedidos', []); h.unshift(p); LS.set('cc_pedidos', h.slice(0, 300));
   $('#rView').hidden = true; $('#dView').hidden = false;
-  $('#dLead').textContent = `Número ${p.id}. Ya está en el correo de Cheri Cheri.`;
   $('#dRes').innerHTML = htmlRes(p);
+  if (CLIENTE){
+    $('#dLead').textContent = `Gracias, ${p.cliente.split(' ')[0]}. Tu número de pedido es ${p.id}. Te escribimos por WhatsApp para coordinar la entrega y el pago.`;
+    $('#waCli').hidden = true; $('#verSitio').hidden = false; $('#dNote').hidden = true;
+    $('#otro').textContent = 'Hacer otro pedido';
+    return;
+  }
+  const h = LS.get('cc_pedidos', []); h.unshift(p); LS.set('cc_pedidos', h.slice(0, 300));
+  $('#dLead').textContent = `Número ${p.id}. Ya está en el correo de Cheri Cheri.`;
   const nombre = p.cliente.split(' ')[0];
   const que = p.tipo === 'Una vez'
     ? `${p.cajas} caja${p.cajas > 1 ? 's' : ''} de cerezas de 5 kg`
@@ -553,7 +585,8 @@ function pintarMios(){
 
 /* ---------- Inicio ---------- */
 pintarVendedor(); pintar(); pintarContador();
-if (!vendedor) abrirVendedor();
+(() => { const n = new Date(), z = x => String(x).padStart(2, '0'); $('#f').fecha.min = `${n.getFullYear()}-${z(n.getMonth() + 1)}-${z(n.getDate())}` })();
+if (!vendedor && !CLIENTE) abrirVendedor();
 </script>
 </body>
 </html>
